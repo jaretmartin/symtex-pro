@@ -20,6 +20,7 @@ export * from './entities/narrative';
 export * from './entities/chat';
 export * from './entities/reasoning';
 export * from './entities/agent';
+export * from './entities/command-palette';
 
 // API types
 export * from './api/responses';

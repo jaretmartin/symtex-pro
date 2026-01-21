@@ -5,3 +5,4 @@
  */
 
 export { useTreeExpansion } from './useTreeExpansion';
+export { useCommandPalette, CATEGORY_ORDER } from './useCommandPalette';

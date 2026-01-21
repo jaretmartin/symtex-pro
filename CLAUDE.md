@@ -2,11 +2,11 @@
 
 ## Project Identity
 
-> **This is PRO** (symtex-prototype)
+> **This is PRO** (symtex-pro)
 >
 > | Alias | Vercel | URL | Role |
 > |-------|--------|-----|------|
-> | **Pro** | symtex-prototype | symtex-prototype.vercel.app | Enterprise/Team features |
+> | **Pro** | symtex-pro | symtex-pro.vercel.app | Enterprise/Team features |
 >
 > **Timeline**: 6 months | **Language**: TypeScript
 >

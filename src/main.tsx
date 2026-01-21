@@ -22,6 +22,17 @@ const Knowledge = lazy(() => import('./routes/library/knowledge'));
 const Spaces = lazy(() => import('./routes/spaces/index'));
 const Chat = lazy(() => import('./routes/chat/index'));
 
+// Cognate routes
+const Cognates = lazy(() => import('./routes/studio/cognates/index'));
+const CognateSOPs = lazy(() => import('./routes/studio/cognates/[id]/sops'));
+const NewSOP = lazy(() => import('./routes/studio/cognates/[id]/sops/new'));
+const EditSOP = lazy(() => import('./routes/studio/cognates/[id]/sops/[sopId]'));
+const SOPEdit = lazy(() => import('./routes/studio/cognates/[id]/sops/edit'));
+const SOPRules = lazy(() => import('./routes/studio/cognates/[id]/sops/rules'));
+const SOPValidate = lazy(() => import('./routes/studio/cognates/[id]/sops/validate'));
+const CognateBootstrap = lazy(() => import('./routes/studio/cognates/[id]/bootstrap'));
+const CognatePacks = lazy(() => import('./routes/studio/cognates/[id]/packs'));
+
 // Loading fallback component
 function RouteLoading(): JSX.Element {
   return (
@@ -104,6 +115,80 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             element={
               <Suspense fallback={<RouteLoading />}>
                 <AgentRoster />
+              </Suspense>
+            }
+          />
+
+          {/* Cognate Routes */}
+          <Route
+            path="studio/cognates"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <Cognates />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/sops"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <CognateSOPs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/sops/new"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <NewSOP />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/sops/:sopId"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <EditSOP />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/sops/:sopId/edit"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <SOPEdit />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/sops/:sopId/rules"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <SOPRules />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/sops/:sopId/validate"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <SOPValidate />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/bootstrap"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <CognateBootstrap />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/packs"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <CognatePacks />
               </Suspense>
             }
           />
