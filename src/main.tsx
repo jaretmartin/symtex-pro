@@ -32,6 +32,12 @@ const SOPRules = lazy(() => import('./routes/studio/cognates/[id]/sops/rules'));
 const SOPValidate = lazy(() => import('./routes/studio/cognates/[id]/sops/validate'));
 const CognateBootstrap = lazy(() => import('./routes/studio/cognates/[id]/bootstrap'));
 const CognatePacks = lazy(() => import('./routes/studio/cognates/[id]/packs'));
+const CognateTraining = lazy(() => import('./routes/studio/cognates/[id]/training'));
+
+// Governance routes
+const Governance = lazy(() => import('./routes/governance/index'));
+const ConcordSetup = lazy(() => import('./routes/governance/concord/index'));
+const ConcordLive = lazy(() => import('./routes/governance/concord/[sessionId]'));
 
 // Loading fallback component
 function RouteLoading(): JSX.Element {
@@ -189,6 +195,40 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             element={
               <Suspense fallback={<RouteLoading />}>
                 <CognatePacks />
+              </Suspense>
+            }
+          />
+          <Route
+            path="studio/cognates/:id/training"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <CognateTraining />
+              </Suspense>
+            }
+          />
+
+          {/* Governance Section */}
+          <Route
+            path="governance"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <Governance />
+              </Suspense>
+            }
+          />
+          <Route
+            path="governance/concord"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <ConcordSetup />
+              </Suspense>
+            }
+          />
+          <Route
+            path="governance/concord/:sessionId"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <ConcordLive />
               </Suspense>
             }
           />

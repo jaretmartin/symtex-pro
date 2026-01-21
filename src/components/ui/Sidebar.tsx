@@ -29,7 +29,10 @@ import {
   BookText,
   Layers,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Brain,
+  Shield,
+  Users,
 } from 'lucide-react';
 import clsx from 'clsx';
 import { useUIStore } from '../../store';
@@ -55,6 +58,12 @@ const studioNavigation: NavItem[] = [
   { name: 'Automations', href: '/studio/automations', icon: Play },
   { name: 'Narrative', href: '/studio/narrative', icon: BookText },
   { name: 'Agents', href: '/studio/agents', icon: Bot },
+  { name: 'Cognates', href: '/studio/cognates', icon: Brain },
+];
+
+const governanceNavigation: NavItem[] = [
+  { name: 'Command Center', href: '/governance', icon: Shield },
+  { name: 'Concord', href: '/governance/concord', icon: Users },
 ];
 
 const libraryNavigation: NavItem[] = [
@@ -243,6 +252,14 @@ export default function Sidebar(): JSX.Element {
               Studio
             </p>
             {studioNavigation.map(renderNavItem)}
+          </div>
+
+          {/* Governance Section */}
+          <div className="pt-4 mt-4 border-t border-symtex-border">
+            <p className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              Governance
+            </p>
+            {governanceNavigation.map(renderNavItem)}
           </div>
 
           {/* Library Section */}
