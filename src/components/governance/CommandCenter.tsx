@@ -287,15 +287,15 @@ export function CommandCenter() {
   };
 
   const handlePauseAll = () => {
-    console.log('Pausing all missions...');
+    // TODO: Implement pause all missions functionality
   };
 
   const handleEmergencyStop = () => {
-    console.log('EMERGENCY STOP triggered');
+    // TODO: Implement emergency stop functionality
   };
 
   const handleExportAudit = () => {
-    console.log('Exporting audit log...');
+    // TODO: Implement export audit log functionality
   };
 
   return (
@@ -323,7 +323,7 @@ export function CommandCenter() {
             <RefreshCw className={clsx('w-5 h-5 text-zinc-400', isRefreshing && 'animate-spin')} />
           </button>
           <Link
-            to="/governance/policies"
+            to="/governance"
             className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
           >
             <Settings className="w-4 h-4" />

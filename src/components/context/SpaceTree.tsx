@@ -13,12 +13,13 @@
  * - Persistent expansion state via localStorage
  */
 
-import { useCallback, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useMemo, useRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useSpaceStore } from '@/store/useSpaceStore';
 import { useContextStore } from '@/store/useContextStore';
 import { useTreeExpansion } from '@/hooks/useTreeExpansion';
 import { TreeNode } from './TreeNode';
+import { CreateDomainModal, CreateProjectModal, CreateMissionModal } from '@/components/space';
 import type { SpaceType, DomainSpace, Project, SpaceMission } from '@/types';
 
 export interface SpaceTreeProps {
@@ -139,6 +140,13 @@ export function SpaceTree({ className, onNavigate }: SpaceTreeProps): JSX.Elemen
 
   const treeData = useTreeData();
 
+  // Modal state for quick add actions
+  const [isCreateDomainOpen, setIsCreateDomainOpen] = useState(false);
+  const [isCreateProjectOpen, setIsCreateProjectOpen] = useState(false);
+  const [isCreateMissionOpen, setIsCreateMissionOpen] = useState(false);
+  const [selectedDomainId, setSelectedDomainId] = useState<string | undefined>(undefined);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(undefined);
+
   const {
     isExpanded,
     toggleExpanded,
@@ -191,6 +199,36 @@ export function SpaceTree({ className, onNavigate }: SpaceTreeProps): JSX.Elemen
     [currentSpaceType, currentId]
   );
 
+  // Quick add handlers
+  const handleQuickAddDomain = useCallback((): void => {
+    setIsCreateDomainOpen(true);
+  }, []);
+
+  const handleQuickAddProject = useCallback((domainId: string): void => {
+    setSelectedDomainId(domainId);
+    setIsCreateProjectOpen(true);
+  }, []);
+
+  const handleQuickAddMission = useCallback((projectId: string): void => {
+    setSelectedProjectId(projectId);
+    setIsCreateMissionOpen(true);
+  }, []);
+
+  // Modal close handlers
+  const handleCloseDomainModal = useCallback((): void => {
+    setIsCreateDomainOpen(false);
+  }, []);
+
+  const handleCloseProjectModal = useCallback((): void => {
+    setIsCreateProjectOpen(false);
+    setSelectedDomainId(undefined);
+  }, []);
+
+  const handleCloseMissionModal = useCallback((): void => {
+    setIsCreateMissionOpen(false);
+    setSelectedProjectId(undefined);
+  }, []);
+
   // Render personal space and its children
   const renderPersonalSpace = (): JSX.Element | null => {
     if (!personal) {
@@ -212,10 +250,7 @@ export function SpaceTree({ className, onNavigate }: SpaceTreeProps): JSX.Elemen
         hasChildren={treeData.domains.length > 0}
         onToggle={() => toggleExpanded('personal')}
         onSelect={() => handleNavigate('personal', 'personal', personal.name)}
-        onQuickAdd={() => {
-          // TODO: Implement quick add domain modal
-          console.log('Quick add domain');
-        }}
+        onQuickAdd={handleQuickAddDomain}
         childCount={treeData.domains.length}
       >
         {treeData.domains.map((domain) => renderDomain(domain))}
@@ -242,10 +277,7 @@ export function SpaceTree({ className, onNavigate }: SpaceTreeProps): JSX.Elemen
         hasChildren={domainProjects.length > 0}
         onToggle={() => toggleExpanded(nodeId)}
         onSelect={() => handleNavigate('domain', domain.id, domain.name, domain.icon)}
-        onQuickAdd={() => {
-          // TODO: Implement quick add project modal
-          console.log('Quick add project to domain:', domain.id);
-        }}
+        onQuickAdd={() => handleQuickAddProject(domain.id)}
         childCount={domainProjects.length}
       >
         {domainProjects.map((project) => renderProject(project))}
@@ -271,10 +303,7 @@ export function SpaceTree({ className, onNavigate }: SpaceTreeProps): JSX.Elemen
         hasChildren={projectMissions.length > 0}
         onToggle={() => toggleExpanded(nodeId)}
         onSelect={() => handleNavigate('project', project.id, project.name)}
-        onQuickAdd={() => {
-          // TODO: Implement quick add mission modal
-          console.log('Quick add mission to project:', project.id);
-        }}
+        onQuickAdd={() => handleQuickAddMission(project.id)}
         childCount={projectMissions.length}
       >
         {projectMissions.map((mission) => renderMission(mission))}
@@ -302,15 +331,33 @@ export function SpaceTree({ className, onNavigate }: SpaceTreeProps): JSX.Elemen
   };
 
   return (
-    <div
-      ref={treeRef}
-      className={clsx('py-2', className)}
-      role="tree"
-      aria-label="Space hierarchy navigation"
-      onKeyDown={handleKeyDown}
-    >
-      {renderPersonalSpace()}
-    </div>
+    <>
+      <div
+        ref={treeRef}
+        className={clsx('py-2', className)}
+        role="tree"
+        aria-label="Space hierarchy navigation"
+        onKeyDown={handleKeyDown}
+      >
+        {renderPersonalSpace()}
+      </div>
+
+      {/* Quick Add Modals */}
+      <CreateDomainModal
+        isOpen={isCreateDomainOpen}
+        onClose={handleCloseDomainModal}
+      />
+      <CreateProjectModal
+        isOpen={isCreateProjectOpen}
+        onClose={handleCloseProjectModal}
+        defaultDomainId={selectedDomainId}
+      />
+      <CreateMissionModal
+        isOpen={isCreateMissionOpen}
+        onClose={handleCloseMissionModal}
+        defaultProjectId={selectedProjectId}
+      />
+    </>
   );
 }
 

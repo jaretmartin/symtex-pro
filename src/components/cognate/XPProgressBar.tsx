@@ -58,7 +58,7 @@ export function XPProgressBar({
   const milestones = [25, 50, 75];
 
   return (
-    <div className={clsx('rounded-lg bg-slate-800/50', config.padding, className)}>
+    <div className={clsx('rounded-lg bg-surface-card/50', config.padding, className)}>
       {/* Header with level badge and XP info */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export function XPProgressBar({
               Level {level}
             </span>
             {xpToNextLevel > 0 && (
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-muted-foreground">
                 {xpToNextLevel.toLocaleString()} XP to next level
               </p>
             )}
@@ -92,7 +92,7 @@ export function XPProgressBar({
               {xp.toLocaleString()} XP
             </span>
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-muted-foreground">
             {current.toLocaleString()} / {next.toLocaleString()}
           </p>
         </div>
@@ -102,7 +102,7 @@ export function XPProgressBar({
       <div className="relative">
         <div
           className={clsx(
-            'w-full bg-slate-700 rounded-full overflow-hidden',
+            'w-full bg-surface-elevated rounded-full overflow-hidden',
             config.barHeight
           )}
         >
@@ -122,14 +122,14 @@ export function XPProgressBar({
             {milestones.map((milestone) => (
               <div
                 key={milestone}
-                className="absolute w-0.5 h-full bg-slate-600"
+                className="absolute w-0.5 h-full bg-border"
                 style={{ left: `${milestone}%` }}
               >
                 <div
                   className={clsx(
                     'absolute -top-4 left-1/2 -translate-x-1/2',
                     'w-2 h-2 rounded-full',
-                    progress >= milestone ? 'bg-amber-400' : 'bg-slate-600'
+                    progress >= milestone ? 'bg-amber-400' : 'bg-border'
                   )}
                 />
               </div>
@@ -140,7 +140,7 @@ export function XPProgressBar({
 
       {/* Progress percentage */}
       <div className="flex items-center justify-between mt-1">
-        <span className="text-xs text-slate-500">{progress}% complete</span>
+        <span className="text-xs text-muted-foreground">{progress}% complete</span>
         {progress > 0 && (
           <span className="flex items-center gap-1 text-xs text-green-400">
             <TrendingUp className="w-3 h-3" />

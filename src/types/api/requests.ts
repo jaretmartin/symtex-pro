@@ -1,9 +1,13 @@
 /**
  * API request payload types
+ *
+ * NOTE: Use canonical Symtex terminology:
+ * - Cognates (not agents)
+ * - Automations (not workflows)
  */
 
 import type { MissionPriority, MissionStatus } from '../entities/mission';
-import type { WorkflowStatus } from '../entities/workflow';
+import type { AutomationBuilderStatus } from '../entities/automation-enhanced';
 
 export interface CreateMissionRequest {
   title: string;
@@ -23,27 +27,27 @@ export interface UpdateMissionRequest {
   tags?: string[];
 }
 
-export interface CreateWorkflowRequest {
+export interface CreateAutomationRequest {
   name: string;
   description?: string;
   nodes: unknown[];
   edges: unknown[];
 }
 
-export interface UpdateWorkflowRequest {
+export interface UpdateAutomationRequest {
   name?: string;
   description?: string;
   nodes?: unknown[];
   edges?: unknown[];
-  status?: WorkflowStatus;
+  status?: AutomationBuilderStatus;
 }
 
-export interface ExecuteWorkflowRequest {
+export interface ExecuteAutomationRequest {
   triggerData?: Record<string, unknown>;
   dryRun?: boolean;
 }
 
-export interface GenerateWorkflowRequest {
+export interface GenerateAutomationRequest {
   prompt: string;
   context?: string;
 }
@@ -61,3 +65,19 @@ export interface PaginationParams {
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
 }
+
+// ============================================================================
+// DEPRECATED TYPE ALIASES (Backwards Compatibility)
+// ============================================================================
+
+/** @deprecated Use CreateAutomationRequest instead */
+export type CreateWorkflowRequest = CreateAutomationRequest;
+
+/** @deprecated Use UpdateAutomationRequest instead */
+export type UpdateWorkflowRequest = UpdateAutomationRequest;
+
+/** @deprecated Use ExecuteAutomationRequest instead */
+export type ExecuteWorkflowRequest = ExecuteAutomationRequest;
+
+/** @deprecated Use GenerateAutomationRequest instead */
+export type GenerateWorkflowRequest = GenerateAutomationRequest;

@@ -15,9 +15,9 @@ interface ToastItemProps extends ToastType {
 
 const variantStyles = {
   default: {
-    container: 'bg-symtex-card border-symtex-border',
+    container: 'bg-card border-border',
     icon: null,
-    iconClass: 'text-slate-400',
+    iconClass: 'text-muted-foreground',
   },
   success: {
     container: 'bg-success/10 border-success/30',
@@ -71,16 +71,16 @@ function ToastItem({ title, description, variant, onDismiss }: ToastItemProps): 
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-white">{title}</p>
+        <p className="text-sm font-medium text-foreground">{title}</p>
         {description && (
-          <p className="mt-1 text-sm text-slate-400">{description}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         )}
       </div>
 
       {/* Dismiss button */}
       <button
         onClick={handleDismiss}
-        className="flex-shrink-0 text-slate-400 hover:text-white transition-colors"
+        className="flex-shrink-0 text-muted-foreground hover:text-foreground transition-colors"
         aria-label="Dismiss notification"
       >
         <X className="w-4 h-4" />

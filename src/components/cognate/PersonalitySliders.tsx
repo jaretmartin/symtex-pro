@@ -93,12 +93,16 @@ function PersonalitySlider({
     );
   }
 
+  const sliderId = `personality-${config.trait}`;
+
   return (
     <div className="space-y-2">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-white">{config.label}</span>
+          <label htmlFor={sliderId} className="text-sm font-medium text-white">
+            {config.label}
+          </label>
           <button
             type="button"
             className="text-slate-500 hover:text-slate-400 transition-colors"
@@ -114,7 +118,7 @@ function PersonalitySlider({
             </div>
           )}
         </div>
-        <span className="text-sm font-medium text-slate-400">{value}</span>
+        <span className="text-sm font-medium text-slate-400" aria-hidden="true">{value}</span>
       </div>
 
       {/* Slider */}
@@ -132,12 +136,17 @@ function PersonalitySlider({
 
         {/* Native slider (transparent, for functionality) */}
         <input
+          id={sliderId}
           type="range"
           min="0"
           max="100"
           value={value}
           onChange={handleChange}
           disabled={readOnly}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={value}
+          aria-valuetext={`${config.label}: ${value} percent`}
           className={clsx(
             'relative w-full h-6 bg-transparent appearance-none cursor-pointer',
             'slider-thumb-custom',
@@ -150,7 +159,7 @@ function PersonalitySlider({
       </div>
 
       {/* Labels */}
-      <div className="flex items-center justify-between text-xs text-slate-500">
+      <div className="flex items-center justify-between text-xs text-slate-500" aria-hidden="true">
         <span>{config.minLabel}</span>
         <span>{config.maxLabel}</span>
       </div>

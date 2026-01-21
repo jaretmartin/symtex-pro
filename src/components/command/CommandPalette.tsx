@@ -66,7 +66,7 @@ export function CommandPalette(): JSX.Element | null {
       {
         id: 'lux',
         label: 'Open LUX Builder',
-        description: 'Visual workflow editor',
+        description: 'Visual Automation editor',
         icon: <Workflow className="w-4 h-4" />,
         shortcut: 'G L',
         category: 'navigation',
@@ -84,7 +84,7 @@ export function CommandPalette(): JSX.Element | null {
       {
         id: 'templates',
         label: 'Browse Templates',
-        description: 'Workflow templates library',
+        description: 'Automation templates library',
         icon: <FileText className="w-4 h-4" />,
         shortcut: 'G T',
         category: 'navigation',
@@ -102,9 +102,9 @@ export function CommandPalette(): JSX.Element | null {
 
       // Actions
       {
-        id: 'new-workflow',
-        label: 'Create New Workflow',
-        description: 'Start building a new automation',
+        id: 'new-automation',
+        label: 'Create New Automation',
+        description: 'Start building a new Automation',
         icon: <Plus className="w-4 h-4" />,
         shortcut: 'N W',
         category: 'action',

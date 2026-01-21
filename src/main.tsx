@@ -8,6 +8,7 @@ import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
+import { initializeTheme } from '@/hooks';
 import './index.css';
 
 // Lazy load route components for code splitting
@@ -16,7 +17,6 @@ const Missions = lazy(() => import('./routes/build/missions/index'));
 const LuxBuilder = lazy(() => import('./routes/studio/lux/index'));
 const Automations = lazy(() => import('./routes/studio/automations/index'));
 const NarrativeBuilder = lazy(() => import('./routes/studio/narrative/index'));
-const AgentRoster = lazy(() => import('./routes/studio/agents/index'));
 const Templates = lazy(() => import('./routes/library/templates'));
 const Knowledge = lazy(() => import('./routes/library/knowledge'));
 const Spaces = lazy(() => import('./routes/spaces/index'));
@@ -38,6 +38,9 @@ const CognateTraining = lazy(() => import('./routes/studio/cognates/[id]/trainin
 const Governance = lazy(() => import('./routes/governance/index'));
 const ConcordSetup = lazy(() => import('./routes/governance/concord/index'));
 const ConcordLive = lazy(() => import('./routes/governance/concord/[sessionId]'));
+
+// Settings route
+const Settings = lazy(() => import('./routes/settings/index'));
 
 // Loading fallback component
 function RouteLoading(): JSX.Element {
@@ -65,6 +68,9 @@ function ComingSoon({ title }: { title: string }): JSX.Element {
     </div>
   );
 }
+
+// Initialize theme before React renders to prevent FOUC
+initializeTheme();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -116,14 +122,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               </Suspense>
             }
           />
-          <Route
-            path="studio/agents"
-            element={
-              <Suspense fallback={<RouteLoading />}>
-                <AgentRoster />
-              </Suspense>
-            }
-          />
+          {/* Legacy redirect: agents -> cognates */}
+          <Route path="studio/agents" element={<Navigate to="/studio/cognates" replace />} />
 
           {/* Cognate Routes */}
           <Route
@@ -287,11 +287,20 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             }
           />
 
+          {/* Settings Route */}
+          <Route
+            path="settings"
+            element={
+              <Suspense fallback={<RouteLoading />}>
+                <Settings />
+              </Suspense>
+            }
+          />
+
           {/* Coming Soon Routes */}
           <Route path="dna" element={<ComingSoon title="DNA Analytics" />} />
           <Route path="analytics" element={<ComingSoon title="Analytics Dashboard" />} />
           <Route path="conversations" element={<Navigate to="/chat" replace />} />
-          <Route path="settings" element={<ComingSoon title="Settings" />} />
 
           {/* Legacy redirects */}
           <Route path="activity" element={<Navigate to="/" replace />} />

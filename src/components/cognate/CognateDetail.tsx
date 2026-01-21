@@ -62,12 +62,12 @@ export function CognateDetail({
   return (
     <div
       className={clsx(
-        'bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden',
+        'bg-surface-base border border-border rounded-xl overflow-hidden',
         className
       )}
     >
       {/* Header */}
-      <div className="p-6 border-b border-zinc-800">
+      <div className="p-6 border-b border-border">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-4">
             {/* Avatar */}
@@ -87,9 +87,9 @@ export function CognateDetail({
                 <h2 className="text-xl font-bold text-white">{cognate.name}</h2>
                 <StatusBadge status={cognate.availability} />
               </div>
-              <p className="text-zinc-400">{cognate.role || 'No role assigned'}</p>
+              <p className="text-muted-foreground">{cognate.role || 'No role assigned'}</p>
               {cognate.industry && (
-                <p className="text-sm text-zinc-500">{cognate.industry}</p>
+                <p className="text-sm text-muted-foreground">{cognate.industry}</p>
               )}
             </div>
           </div>
@@ -99,7 +99,7 @@ export function CognateDetail({
               <button
                 type="button"
                 onClick={(): void => onEdit(cognate)}
-                className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-surface-card text-white rounded-lg hover:bg-surface-elevated transition-colors"
               >
                 <Settings className="w-4 h-4" />
                 Configure
@@ -109,7 +109,7 @@ export function CognateDetail({
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-lg transition-colors"
+                className="p-2 text-muted-foreground hover:text-white hover:bg-surface-card rounded-lg transition-colors"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />
@@ -120,7 +120,7 @@ export function CognateDetail({
 
         {/* Description */}
         {cognate.description && (
-          <p className="mt-4 text-zinc-400">{cognate.description}</p>
+          <p className="mt-4 text-muted-foreground">{cognate.description}</p>
         )}
 
         {/* Autonomy Level */}
@@ -130,7 +130,7 @@ export function CognateDetail({
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-zinc-800">
+      <div className="border-b border-border">
         <nav className="flex px-6" role="tablist">
           {tabs.map((tab) => (
             <button
@@ -143,7 +143,7 @@ export function CognateDetail({
                 'flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors',
                 activeTab === tab.id
                   ? 'text-symtex-primary border-symtex-primary'
-                  : 'text-zinc-400 border-transparent hover:text-white'
+                  : 'text-muted-foreground border-transparent hover:text-white'
               )}
             >
               <tab.icon className="w-4 h-4" />
@@ -191,7 +191,7 @@ function StatusBadge({ status }: StatusBadgeProps): JSX.Element {
       className={clsx(
         'flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium',
         config.color,
-        'bg-slate-800/50'
+        'bg-surface-card/50'
       )}
     >
       <span className={clsx('w-2 h-2 rounded-full', config.dotColor)} />
@@ -206,7 +206,7 @@ function OverviewTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
     <div className="space-y-6">
       {/* XP Progress */}
       <div>
-        <h3 className="text-sm font-medium text-zinc-400 mb-3">Experience Progress</h3>
+        <h3 className="text-sm font-medium text-muted-foreground mb-3">Experience Progress</h3>
         <XPProgressBar
           xp={cognate.xp}
           level={cognate.level}
@@ -217,7 +217,7 @@ function OverviewTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
 
       {/* Quick Stats */}
       <div>
-        <h3 className="text-sm font-medium text-zinc-400 mb-3">Performance</h3>
+        <h3 className="text-sm font-medium text-muted-foreground mb-3">Performance</h3>
         <div className="grid grid-cols-3 gap-4">
           <StatCard
             icon={CheckCircle}
@@ -239,15 +239,15 @@ function OverviewTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
 
       {/* Timestamps */}
       <div>
-        <h3 className="text-sm font-medium text-zinc-400 mb-3">Activity</h3>
+        <h3 className="text-sm font-medium text-muted-foreground mb-3">Activity</h3>
         <div className="space-y-2">
           {cognate.lastActiveAt && (
-            <div className="flex items-center gap-2 text-sm text-zinc-400">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="w-4 h-4" />
               <span>Last active: {new Date(cognate.lastActiveAt).toLocaleString()}</span>
             </div>
           )}
-          <div className="flex items-center gap-2 text-sm text-zinc-400">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="w-4 h-4" />
             <span>Created: {new Date(cognate.createdAt).toLocaleDateString()}</span>
           </div>
@@ -260,13 +260,13 @@ function OverviewTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
 function SkillsTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
   return (
     <div>
-      <h3 className="text-sm font-medium text-zinc-400 mb-3">
+      <h3 className="text-sm font-medium text-muted-foreground mb-3">
         Skills ({cognate.skills.length})
       </h3>
       {cognate.skills.length > 0 ? (
         <SkillList skills={cognate.skills} />
       ) : (
-        <p className="text-zinc-500 text-sm">No skills configured yet.</p>
+        <p className="text-muted-foreground text-sm">No skills configured yet.</p>
       )}
     </div>
   );
@@ -282,9 +282,9 @@ function PersonalityTab({ cognate, isEditable, onPersonalityChange }: Personalit
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-zinc-400">Personality Configuration</h3>
+        <h3 className="text-sm font-medium text-muted-foreground">Personality Configuration</h3>
         {isEditable && (
-          <span className="text-xs text-zinc-500">Click and drag sliders to adjust</span>
+          <span className="text-xs text-muted-foreground">Click and drag sliders to adjust</span>
         )}
       </div>
       <PersonalitySliders
@@ -299,7 +299,7 @@ function PersonalityTab({ cognate, isEditable, onPersonalityChange }: Personalit
 function SOPsTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
   return (
     <div>
-      <h3 className="text-sm font-medium text-zinc-400 mb-3">
+      <h3 className="text-sm font-medium text-muted-foreground mb-3">
         Assigned SOPs ({cognate.assignedSOPs.length})
       </h3>
       {cognate.assignedSOPs.length > 0 ? (
@@ -307,15 +307,15 @@ function SOPsTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
           {cognate.assignedSOPs.map((sopId) => (
             <div
               key={sopId}
-              className="flex items-center gap-3 p-3 rounded-lg bg-zinc-800/50"
+              className="flex items-center gap-3 p-3 rounded-lg bg-surface-card/50"
             >
-              <FileText className="w-4 h-4 text-zinc-400" />
+              <FileText className="w-4 h-4 text-muted-foreground" />
               <span className="text-sm text-white">{sopId}</span>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-zinc-500 text-sm">No SOPs assigned yet.</p>
+        <p className="text-muted-foreground text-sm">No SOPs assigned yet.</p>
       )}
     </div>
   );
@@ -324,7 +324,7 @@ function SOPsTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
 function ActivityTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
   return (
     <div>
-      <h3 className="text-sm font-medium text-zinc-400 mb-3">Recent Activity</h3>
+      <h3 className="text-sm font-medium text-muted-foreground mb-3">Recent Activity</h3>
       <div className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <StatCard
@@ -338,7 +338,7 @@ function ActivityTab({ cognate }: { cognate: ExtendedCognate }): JSX.Element {
             value={`${Math.round(cognate.successRate)}%`}
           />
         </div>
-        <p className="text-zinc-500 text-sm text-center py-8">
+        <p className="text-muted-foreground text-sm text-center py-8">
           Detailed activity log coming soon...
         </p>
       </div>
@@ -354,10 +354,10 @@ interface StatCardProps {
 
 function StatCard({ icon: Icon, label, value }: StatCardProps): JSX.Element {
   return (
-    <div className="p-4 rounded-lg bg-zinc-800/50">
+    <div className="p-4 rounded-lg bg-surface-card/50">
       <div className="flex items-center gap-2 mb-2">
-        <Icon className="w-4 h-4 text-zinc-400" />
-        <span className="text-xs text-zinc-400">{label}</span>
+        <Icon className="w-4 h-4 text-muted-foreground" />
+        <span className="text-xs text-muted-foreground">{label}</span>
       </div>
       <p className="text-2xl font-bold text-white">{value}</p>
     </div>

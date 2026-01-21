@@ -70,7 +70,7 @@ export default class WidgetErrorBoundary extends Component<
       return (
         <div
           className={clsx(
-            'bg-symtex-card rounded-xl border border-red-500/30 overflow-hidden',
+            'bg-card rounded-xl border border-red-500/30 overflow-hidden',
             className
           )}
         >
@@ -78,15 +78,15 @@ export default class WidgetErrorBoundary extends Component<
             <div className="p-3 rounded-full bg-red-500/20 mb-4">
               <AlertTriangle className="w-6 h-6 text-red-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
               {widgetName ? `${widgetName} Error` : 'Something went wrong'}
             </h3>
-            <p className="text-sm text-slate-400 text-center mb-4 max-w-xs">
+            <p className="text-sm text-muted-foreground text-center mb-4 max-w-xs">
               {error?.message || 'An unexpected error occurred while loading this widget.'}
             </p>
             <button
               onClick={this.handleRetry}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium transition-colors"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-elevated hover:bg-muted text-foreground text-sm font-medium transition-colors"
             >
               <RefreshCcw className="w-4 h-4" />
               Try Again
@@ -125,7 +125,7 @@ export function WidgetErrorDisplay({
   return (
     <div
       className={clsx(
-        'bg-symtex-card rounded-xl border border-red-500/30 overflow-hidden',
+        'bg-card rounded-xl border border-red-500/30 overflow-hidden',
         className
       )}
     >
@@ -133,16 +133,16 @@ export function WidgetErrorDisplay({
         <div className="p-3 rounded-full bg-red-500/20 mb-4">
           <AlertTriangle className="w-6 h-6 text-red-400" />
         </div>
-        <h3 className="text-lg font-semibold text-white mb-2">
+        <h3 className="text-lg font-semibold text-foreground mb-2">
           {widgetName ? `${widgetName} Error` : 'Unable to Load'}
         </h3>
-        <p className="text-sm text-slate-400 text-center mb-4 max-w-xs">
+        <p className="text-sm text-muted-foreground text-center mb-4 max-w-xs">
           {message}
         </p>
         {onRetry && (
           <button
             onClick={onRetry}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-elevated hover:bg-muted text-foreground text-sm font-medium transition-colors"
           >
             <RefreshCcw className="w-4 h-4" />
             Try Again

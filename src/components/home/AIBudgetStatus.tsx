@@ -165,13 +165,13 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
 
   return (
     <div className={clsx(
-      'bg-symtex-card rounded-xl border border-symtex-border overflow-hidden transition-all duration-300',
+      'bg-card rounded-xl border border-border overflow-hidden transition-all duration-300',
       className
     )}>
       {/* Header - Always Visible */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full p-5 flex items-center justify-between hover:bg-slate-800/30 transition-colors"
+        className="w-full p-5 flex items-center justify-between hover:bg-muted/30 transition-colors"
       >
         <div className="flex items-center gap-4">
           <div className={clsx(
@@ -198,7 +198,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
                 </span>
               )}
             </h3>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted-foreground">
               {formatCurrency(totalSpent)} of {formatCurrency(totalAllocated)} used this month
             </p>
           </div>
@@ -223,11 +223,11 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
           {/* Quick Stats */}
           <div className="hidden md:flex items-center gap-6 mr-4">
             <div className="text-right">
-              <p className="text-2xl font-bold text-white">{utilizationPercent.toFixed(1)}%</p>
-              <p className="text-xs text-slate-500">Utilization</p>
+              <p className="text-2xl font-bold text-foreground">{utilizationPercent.toFixed(1)}%</p>
+              <p className="text-xs text-muted-foreground">Utilization</p>
             </div>
             <div className="w-32">
-              <div className="h-2.5 bg-slate-700 rounded-full overflow-hidden">
+              <div className="h-2.5 bg-surface-elevated rounded-full overflow-hidden">
                 <div
                   className={clsx(
                     'h-full rounded-full transition-all duration-500',
@@ -242,7 +242,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
           {/* Expand/Collapse Icon */}
           <div className={clsx(
             'p-2 rounded-lg transition-colors',
-            isExpanded ? 'bg-symtex-primary/20 text-symtex-primary' : 'text-slate-400 hover:text-white'
+            isExpanded ? 'bg-symtex-primary/20 text-symtex-primary' : 'text-muted-foreground hover:text-foreground'
           )}>
             {isExpanded ? (
               <ChevronUp className="w-5 h-5" />
@@ -255,10 +255,10 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="border-t border-symtex-border animate-in slide-in-from-top-2 duration-200">
+        <div className="border-t border-border animate-in slide-in-from-top-2 duration-200">
           {/* Summary Bar */}
-          <div className="p-4 bg-slate-800/30 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+          <div className="p-4 bg-muted/30 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="w-4 h-4" />
               <span>Billing Period: Jan 1 - Jan 31, 2026</span>
             </div>
@@ -289,7 +289,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
 
           {/* Category Breakdown */}
           <div className="p-5 space-y-4">
-            <h4 className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+            <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
               <DollarSign className="w-4 h-4" />
               Spending by Category
             </h4>
@@ -308,7 +308,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
                       e.stopPropagation()
                       handleCategoryClick(category.id)
                     }}
-                    className="p-4 rounded-lg bg-slate-800/50 border border-symtex-border hover:border-symtex-primary/50 transition-colors text-left group"
+                    className="p-4 rounded-lg bg-surface-card/50 border border-border hover:border-symtex-primary/50 transition-colors text-left group"
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
@@ -322,7 +322,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
                           <p className="font-medium text-white text-sm group-hover:text-symtex-primary transition-colors">
                             {category.name}
                           </p>
-                          <p className="text-xs text-slate-500">
+                          <p className="text-xs text-muted-foreground">
                             {formatCurrency(category.spent)} / {formatCurrency(category.allocated)}
                           </p>
                         </div>
@@ -342,7 +342,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
 
                     {/* Progress Bar */}
                     <div className="space-y-1">
-                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                      <div className="h-2 bg-surface-elevated rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all duration-500"
                           style={{
@@ -352,10 +352,10 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
                         />
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-muted-foreground">
                           {catUtilization.toFixed(1)}% used
                         </span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-muted-foreground">
                           {formatCurrency(category.allocated - category.spent)} remaining
                         </span>
                       </div>
@@ -375,8 +375,8 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
 
           {/* Daily Usage Chart Placeholder */}
           <div className="p-5 pt-0">
-            <div className="p-4 rounded-lg border border-dashed border-symtex-border bg-symtex-dark/50">
-              <div className="flex items-center gap-2 text-slate-400 mb-2">
+            <div className="p-4 rounded-lg border border-dashed border-border bg-background/50">
+              <div className="flex items-center gap-2 text-muted-foreground mb-2">
                 <Info className="w-4 h-4" />
                 <span className="text-sm font-medium">Daily Usage Chart</span>
               </div>
@@ -389,7 +389,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
                   />
                 ))}
               </div>
-              <div className="flex justify-between mt-2 text-xs text-slate-500">
+              <div className="flex justify-between mt-2 text-xs text-muted-foreground">
                 <span>Jan 1</span>
                 <span>Today</span>
               </div>
@@ -397,8 +397,8 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
           </div>
 
           {/* Actions */}
-          <div className="p-4 border-t border-symtex-border bg-slate-800/30 flex items-center justify-between">
-            <p className="text-xs text-slate-500 flex items-center gap-1">
+          <div className="p-4 border-t border-border bg-muted/30 flex items-center justify-between">
+            <p className="text-xs text-muted-foreground flex items-center gap-1">
               <Info className="w-3 h-3" />
               Budget resets in 22 days
             </p>
@@ -412,7 +412,7 @@ export default function AIBudgetStatus({ className }: AIBudgetStatusProps): JSX.
                     variant: 'info'
                   })
                 }}
-                className="text-sm text-slate-400 hover:text-white transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Set Alerts
               </button>

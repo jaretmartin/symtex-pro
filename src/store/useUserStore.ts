@@ -40,7 +40,7 @@ const defaultPreferences: UserPreferences = {
   notifications: {
     email: true,
     push: true,
-    workflowFailures: true,
+    automationFailures: true,
     weeklyDigest: true,
   },
   onboardingCompleted: false,

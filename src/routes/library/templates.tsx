@@ -364,7 +364,7 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
           <StarIcon filled={i < fullStars || (i === fullStars && hasHalfStar)} />
         </span>
       ))}
-      <span className="ml-1 text-sm text-gray-400">{rating.toFixed(1)}</span>
+      <span className="ml-1 text-sm text-muted-foreground">{rating.toFixed(1)}</span>
     </div>
   );
 };
@@ -392,7 +392,7 @@ const TemplateCard: React.FC<{ template: Template; isMasonry?: boolean }> = ({ t
   };
 
   return (
-    <div className={`group relative bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 hover:border-symtex-purple/50 transition-all duration-300 hover:shadow-xl hover:shadow-symtex-purple/10 overflow-hidden ${isMasonry ? '' : 'flex flex-col'}`}>
+    <div className={`group relative bg-surface-card/50 backdrop-blur-sm rounded-xl border border-border hover:border-symtex-purple/50 transition-all duration-300 hover:shadow-xl hover:shadow-symtex-purple/10 overflow-hidden ${isMasonry ? '' : 'flex flex-col'}`}>
       {/* Featured Badge */}
       {template.isFeatured && (
         <div className="absolute top-3 right-3 z-10 flex items-center gap-1 px-2 py-1 bg-symtex-gold/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-900">
@@ -415,23 +415,23 @@ const TemplateCard: React.FC<{ template: Template; isMasonry?: boolean }> = ({ t
         <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-symtex-purple transition-colors">
           {template.title}
         </h3>
-        <p className="text-sm text-gray-400 mb-4 line-clamp-2 flex-1">
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-1">
           {template.description}
         </p>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {template.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="px-2 py-0.5 bg-gray-800 rounded text-xs text-gray-400">
+            <span key={tag} className="px-2 py-0.5 bg-surface-card rounded text-xs text-muted-foreground">
               {tag}
             </span>
           ))}
         </div>
 
         {/* Stats Row */}
-        <div className="flex items-center justify-between mb-4 pt-4 border-t border-gray-800">
+        <div className="flex items-center justify-between mb-4 pt-4 border-t border-border">
           <StarRating rating={template.rating} />
-          <div className="flex items-center gap-1 text-sm text-gray-500">
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
             <UsersIcon />
             <span>{formatUsageCount(template.usageCount)} uses</span>
           </div>
@@ -457,7 +457,7 @@ const FeaturedTemplateCard: React.FC<{ template: Template }> = ({ template }) =>
   };
 
   return (
-    <div className="group relative bg-gradient-to-br from-gray-900 to-gray-900/50 backdrop-blur-sm rounded-2xl border border-symtex-purple/30 hover:border-symtex-purple transition-all duration-300 hover:shadow-2xl hover:shadow-symtex-purple/20 overflow-hidden">
+    <div className="group relative bg-gradient-to-br from-surface-base to-surface-base/50 backdrop-blur-sm rounded-2xl border border-symtex-purple/30 hover:border-symtex-purple transition-all duration-300 hover:shadow-2xl hover:shadow-symtex-purple/20 overflow-hidden">
       <div className="flex flex-col md:flex-row">
         {/* Preview Section */}
         <div className={`relative md:w-1/2 h-64 md:h-auto bg-gradient-to-br ${template.previewGradient} overflow-hidden`}>
@@ -490,14 +490,14 @@ const FeaturedTemplateCard: React.FC<{ template: Template }> = ({ template }) =>
             {template.title}
           </h3>
 
-          <p className="text-gray-400 mb-4">
+          <p className="text-muted-foreground mb-4">
             {template.description}
           </p>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-6">
             {template.tags.map((tag) => (
-              <span key={tag} className="px-3 py-1 bg-gray-800/80 rounded-lg text-sm text-gray-300">
+              <span key={tag} className="px-3 py-1 bg-surface-card/80 rounded-lg text-sm text-foreground">
                 {tag}
               </span>
             ))}
@@ -506,7 +506,7 @@ const FeaturedTemplateCard: React.FC<{ template: Template }> = ({ template }) =>
           {/* Stats */}
           <div className="flex items-center gap-6 mb-6">
             <StarRating rating={template.rating} />
-            <div className="flex items-center gap-1.5 text-gray-400">
+            <div className="flex items-center gap-1.5 text-muted-foreground">
               <UsersIcon />
               <span>{formatUsageCount(template.usageCount)} uses</span>
             </div>
@@ -537,7 +537,7 @@ const CategoryFilter: React.FC<{
         className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200 ${
           selected === 'all'
             ? 'bg-symtex-purple text-white shadow-lg shadow-symtex-purple/25'
-            : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white'
+            : 'bg-surface-card/50 text-muted-foreground hover:bg-surface-card hover:text-foreground'
         }`}
       >
         <GridIcon />
@@ -552,7 +552,7 @@ const CategoryFilter: React.FC<{
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200 ${
             selected === cat.id
               ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
-              : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white'
+              : 'bg-surface-card/50 text-muted-foreground hover:bg-surface-card hover:text-foreground'
           }`}
         >
           {cat.icon}
@@ -597,28 +597,28 @@ const TemplatesPage: React.FC = () => {
   }, [filteredTemplates, selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="border-b border-gray-800 bg-gray-950/80 backdrop-blur-xl sticky top-0 z-40">
+      <div className="border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                 Template Library
               </h1>
-              <p className="text-gray-500 mt-1">
+              <p className="text-muted-foreground mt-1">
                 Discover beautifully crafted templates to accelerate your work
               </p>
             </div>
 
             {/* View Mode Toggle */}
-            <div className="flex items-center gap-2 bg-gray-800/50 rounded-lg p-1">
+            <div className="flex items-center gap-2 bg-surface-card/50 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('grid')}
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                   viewMode === 'grid'
                     ? 'bg-symtex-purple text-white'
-                    : 'text-gray-400 hover:text-white'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 <GridIcon />
@@ -629,7 +629,7 @@ const TemplatesPage: React.FC = () => {
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
                   viewMode === 'masonry'
                     ? 'bg-symtex-purple text-white'
-                    : 'text-gray-400 hover:text-white'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 <MasonryIcon />
@@ -643,7 +643,7 @@ const TemplatesPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Search Bar */}
         <div className="relative mb-8">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground">
             <SearchIcon />
           </div>
           <input
@@ -651,7 +651,7 @@ const TemplatesPage: React.FC = () => {
             placeholder="Search templates by name, description, or tags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 bg-gray-900/50 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-symtex-purple focus:ring-1 focus:ring-symtex-purple transition-all"
+            className="w-full pl-12 pr-4 py-4 bg-surface-card/50 border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-symtex-purple focus:ring-1 focus:ring-symtex-purple transition-all"
           />
         </div>
 
@@ -687,7 +687,7 @@ const TemplatesPage: React.FC = () => {
             <h2 className="text-xl font-semibold text-white">
               {selectedCategory === 'all' ? 'All Templates' : CATEGORIES.find(c => c.id === selectedCategory)?.label + ' Templates'}
             </h2>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-muted-foreground">
               {filteredTemplates.length} template{filteredTemplates.length !== 1 ? 's' : ''} found
             </span>
           </div>
@@ -712,11 +712,11 @@ const TemplatesPage: React.FC = () => {
           {/* Empty State */}
           {filteredTemplates.length === 0 && (
             <div className="text-center py-16">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-surface-card flex items-center justify-center">
                 <SearchIcon />
               </div>
-              <h3 className="text-lg font-medium text-white mb-2">No templates found</h3>
-              <p className="text-gray-500">
+              <h3 className="text-lg font-medium text-foreground mb-2">No templates found</h3>
+              <p className="text-muted-foreground">
                 Try adjusting your search or filter criteria
               </p>
             </div>

@@ -44,7 +44,7 @@ const ROLES = [
   { id: 'analyst', name: 'Analyst', description: 'Data analysis and reporting' },
   { id: 'researcher', name: 'Researcher', description: 'Information gathering and research' },
   { id: 'writer', name: 'Writer', description: 'Content creation and copywriting' },
-  { id: 'coordinator', name: 'Coordinator', description: 'Task coordination and scheduling' },
+  { id: 'coordinator', name: 'Coordinator', description: 'Action coordination and scheduling' },
   { id: 'custom', name: 'Custom', description: 'Define your own role' },
 ];
 

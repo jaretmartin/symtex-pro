@@ -119,11 +119,11 @@ export function CognateSelector({
         disabled={disabled}
         className={clsx(
           'w-full flex items-center justify-between gap-2',
-          'px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-lg',
+          'px-4 py-3 bg-surface-base border border-border rounded-lg',
           'text-left transition-colors',
           disabled
             ? 'opacity-50 cursor-not-allowed'
-            : 'hover:border-zinc-600 focus:border-symtex-primary focus:outline-none'
+            : 'hover:border-border focus:border-symtex-primary focus:outline-none'
         )}
       >
         {selectedCognate ? (
@@ -146,13 +146,13 @@ export function CognateSelector({
                 </span>
                 <StatusDot status={selectedCognate.availability} />
               </div>
-              <span className="text-xs text-zinc-400 truncate block">
+              <span className="text-xs text-muted-foreground truncate block">
                 {selectedCognate.role || 'No role'} | Level {selectedCognate.level}
               </span>
             </div>
           </div>
         ) : (
-          <span className="text-zinc-400">{placeholder}</span>
+          <span className="text-muted-foreground">{placeholder}</span>
         )}
 
         <div className="flex items-center gap-1 flex-shrink-0">
@@ -160,7 +160,7 @@ export function CognateSelector({
             <button
               type="button"
               onClick={handleClear}
-              className="p-1 text-zinc-400 hover:text-white rounded-md hover:bg-zinc-700 transition-colors"
+              className="p-1 text-muted-foreground hover:text-white rounded-md hover:bg-surface-elevated transition-colors"
               aria-label="Clear selection"
             >
               <X className="w-4 h-4" />
@@ -168,7 +168,7 @@ export function CognateSelector({
           )}
           <ChevronDown
             className={clsx(
-              'w-5 h-5 text-zinc-400 transition-transform',
+              'w-5 h-5 text-muted-foreground transition-transform',
               isOpen && 'rotate-180'
             )}
           />
@@ -180,14 +180,14 @@ export function CognateSelector({
         <div
           className={clsx(
             'absolute z-50 w-full mt-2',
-            'bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl',
+            'bg-surface-base border border-border rounded-lg shadow-xl',
             'max-h-80 overflow-hidden'
           )}
         >
           {/* Search Input */}
-          <div className="p-2 border-b border-zinc-800">
+          <div className="p-2 border-b border-border">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 ref={inputRef}
                 type="text"
@@ -195,7 +195,7 @@ export function CognateSelector({
                 onChange={(e): void => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Search cognates..."
-                className="w-full pl-10 pr-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white text-sm placeholder-zinc-500 focus:border-symtex-primary focus:outline-none"
+                className="w-full pl-10 pr-4 py-2 bg-surface-card border border-border rounded-lg text-white text-sm placeholder-zinc-500 focus:border-symtex-primary focus:outline-none"
               />
             </div>
           </div>
@@ -214,7 +214,7 @@ export function CognateSelector({
             ) : (
               <div className="px-4 py-8 text-center">
                 <Brain className="w-8 h-8 text-zinc-600 mx-auto mb-2" />
-                <p className="text-zinc-400 text-sm">
+                <p className="text-muted-foreground text-sm">
                   {searchQuery ? 'No cognates found' : 'No cognates available'}
                 </p>
               </div>
@@ -248,7 +248,7 @@ function CognateSelectorOption({
         'transition-colors',
         isSelected
           ? 'bg-symtex-primary/10'
-          : 'hover:bg-zinc-800'
+          : 'hover:bg-surface-card'
       )}
     >
       {/* Avatar */}
@@ -273,7 +273,7 @@ function CognateSelectorOption({
             <span className="text-xs text-yellow-400">(Busy)</span>
           )}
         </div>
-        <span className="text-xs text-zinc-400 truncate block">
+        <span className="text-xs text-muted-foreground truncate block">
           {cognate.role || 'No role assigned'}
         </span>
       </div>
@@ -378,20 +378,20 @@ export function CognateMultiSelector({
       <button
         type="button"
         onClick={(): void => setIsOpen(!isOpen)}
-        className="w-full min-h-[48px] px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-left hover:border-zinc-600 focus:border-symtex-primary focus:outline-none"
+        className="w-full min-h-[48px] px-3 py-2 bg-surface-base border border-border rounded-lg text-left hover:border-border focus:border-symtex-primary focus:outline-none"
       >
         {selectedCognates.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {selectedCognates.map((cognate) => (
               <span
                 key={cognate.id}
-                className="inline-flex items-center gap-1 px-2 py-1 bg-zinc-800 rounded-md text-sm"
+                className="inline-flex items-center gap-1 px-2 py-1 bg-surface-card rounded-md text-sm"
               >
                 <span className="text-white">{cognate.name}</span>
                 <button
                   type="button"
                   onClick={(e): void => removeSelection(cognate.id, e)}
-                  className="text-zinc-400 hover:text-white"
+                  className="text-muted-foreground hover:text-white"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -399,22 +399,22 @@ export function CognateMultiSelector({
             ))}
           </div>
         ) : (
-          <span className="text-zinc-400">{placeholder}</span>
+          <span className="text-muted-foreground">{placeholder}</span>
         )}
       </button>
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl max-h-80 overflow-hidden">
-          <div className="p-2 border-b border-zinc-800">
+        <div className="absolute z-50 w-full mt-2 bg-surface-base border border-border rounded-lg shadow-xl max-h-80 overflow-hidden">
+          <div className="p-2 border-b border-border">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e): void => setSearchQuery(e.target.value)}
                 placeholder="Search cognates..."
-                className="w-full pl-10 pr-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white text-sm placeholder-zinc-500 focus:border-symtex-primary focus:outline-none"
+                className="w-full pl-10 pr-4 py-2 bg-surface-card border border-border rounded-lg text-white text-sm placeholder-zinc-500 focus:border-symtex-primary focus:outline-none"
               />
             </div>
           </div>
@@ -428,7 +428,7 @@ export function CognateMultiSelector({
                 disabled={maxSelections !== undefined && value.length >= maxSelections && !value.includes(cognate.id)}
                 className={clsx(
                   'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
-                  value.includes(cognate.id) ? 'bg-symtex-primary/10' : 'hover:bg-zinc-800',
+                  value.includes(cognate.id) ? 'bg-symtex-primary/10' : 'hover:bg-surface-card',
                   maxSelections !== undefined && value.length >= maxSelections && !value.includes(cognate.id) && 'opacity-50 cursor-not-allowed'
                 )}
               >
@@ -438,7 +438,7 @@ export function CognateMultiSelector({
                   )}
                 </div>
                 <span className="text-white flex-1 truncate">{cognate.name}</span>
-                <span className="text-xs text-zinc-400">L{cognate.level}</span>
+                <span className="text-xs text-muted-foreground">L{cognate.level}</span>
               </button>
             ))}
           </div>

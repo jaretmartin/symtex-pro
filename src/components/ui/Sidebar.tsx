@@ -25,7 +25,6 @@ import {
   BookOpen,
   FileText,
   Lock,
-  Bot,
   BookText,
   Layers,
   ChevronDown,
@@ -37,6 +36,7 @@ import {
 import clsx from 'clsx';
 import { useUIStore } from '../../store';
 import { SpaceTree } from '../context/SpaceTree';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface NavItem {
   name: string;
@@ -57,7 +57,6 @@ const studioNavigation: NavItem[] = [
   { name: 'LUX Builder', href: '/studio/lux', icon: Workflow },
   { name: 'Automations', href: '/studio/automations', icon: Play },
   { name: 'Narrative', href: '/studio/narrative', icon: BookText },
-  { name: 'Agents', href: '/studio/agents', icon: Bot },
   { name: 'Cognates', href: '/studio/cognates', icon: Brain },
 ];
 
@@ -108,14 +107,14 @@ export default function Sidebar(): JSX.Element {
           aria-current={isActive ? 'page' : undefined}
           className={clsx(
             'flex items-center justify-between gap-3 px-4 py-3 rounded-lg transition-all duration-200',
-            'text-slate-500 hover:bg-slate-800/50 cursor-pointer'
+            'text-muted-foreground hover:bg-muted/50 cursor-pointer'
           )}
         >
           <div className="flex items-center gap-3">
             <item.icon className="w-5 h-5" aria-hidden="true" />
             <span className="font-medium">{item.name}</span>
           </div>
-          <span className="flex items-center gap-1 text-xs bg-slate-700/50 text-slate-400 px-2 py-0.5 rounded">
+          <span className="flex items-center gap-1 text-xs bg-surface-elevated/50 text-muted-foreground px-2 py-0.5 rounded">
             <Lock className="w-3 h-3" aria-hidden="true" />
             Soon
           </span>
@@ -132,7 +131,7 @@ export default function Sidebar(): JSX.Element {
           'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200',
           isActive
             ? 'bg-symtex-primary/20 text-symtex-primary border border-symtex-primary/30'
-            : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+            : 'text-muted-foreground hover:bg-surface-card hover:text-foreground'
         )}
       >
         <item.icon className="w-5 h-5" aria-hidden="true" />
@@ -149,8 +148,8 @@ export default function Sidebar(): JSX.Element {
         onClick={() => setSidebarOpen(true)}
         className={clsx(
           'lg:hidden fixed top-4 left-4 z-40 p-2 rounded-lg',
-          'bg-symtex-card border border-symtex-border',
-          'text-slate-400 hover:text-white transition-colors',
+          'bg-card border border-border',
+          'text-muted-foreground hover:text-foreground transition-colors',
           sidebarOpen && 'hidden'
         )}
         aria-label="Open navigation menu"
@@ -174,7 +173,7 @@ export default function Sidebar(): JSX.Element {
         id="sidebar"
         data-tour="sidebar"
         className={clsx(
-          'fixed inset-y-0 left-0 z-50 w-64 bg-symtex-card border-r border-symtex-border flex flex-col',
+          'fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border flex flex-col',
           'transform transition-transform duration-300 ease-in-out',
           'lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -182,14 +181,14 @@ export default function Sidebar(): JSX.Element {
         aria-label="Main navigation"
       >
         {/* Header */}
-        <div className="p-6 border-b border-symtex-border flex items-center justify-between">
+        <div className="p-6 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-              <Zap className="w-6 h-6 text-white" aria-hidden="true" />
+              <Zap className="w-6 h-6 text-foreground" aria-hidden="true" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">Symtex</h1>
-              <p className="text-xs text-slate-400">AI Operations Platform</p>
+              <h1 className="text-xl font-bold text-foreground">Symtex</h1>
+              <p className="text-xs text-muted-foreground">AI Operations Platform</p>
             </div>
           </div>
 
@@ -197,7 +196,7 @@ export default function Sidebar(): JSX.Element {
           <button
             type="button"
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-surface-card transition-colors"
             aria-label="Close navigation menu"
           >
             <X className="w-5 h-5" aria-hidden="true" />
@@ -210,11 +209,11 @@ export default function Sidebar(): JSX.Element {
           {navigation.map(renderNavItem)}
 
           {/* Spaces Section with SpaceTree */}
-          <div className="pt-4 mt-4 border-t border-symtex-border">
+          <div className="pt-4 mt-4 border-t border-border">
             <button
               type="button"
               onClick={() => setSpacesExpanded(!spacesExpanded)}
-              className="w-full flex items-center justify-between px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider hover:text-slate-300 transition-colors"
+              className="w-full flex items-center justify-between px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider hover:text-foreground transition-colors"
             >
               <div className="flex items-center gap-2">
                 <Layers className="w-4 h-4" aria-hidden="true" />
@@ -247,41 +246,48 @@ export default function Sidebar(): JSX.Element {
           </div>
 
           {/* Studio Section */}
-          <div className="pt-4 mt-4 border-t border-symtex-border">
-            <p className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="pt-4 mt-4 border-t border-border">
+            <p className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Studio
             </p>
             {studioNavigation.map(renderNavItem)}
           </div>
 
           {/* Governance Section */}
-          <div className="pt-4 mt-4 border-t border-symtex-border">
-            <p className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="pt-4 mt-4 border-t border-border">
+            <p className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Governance
             </p>
             {governanceNavigation.map(renderNavItem)}
           </div>
 
           {/* Library Section */}
-          <div className="pt-4 mt-4 border-t border-symtex-border">
-            <p className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+          <div className="pt-4 mt-4 border-t border-border">
+            <p className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Library
             </p>
             {libraryNavigation.map(renderNavItem)}
           </div>
         </nav>
 
-        {/* Settings */}
-        <div className="p-4 border-t border-symtex-border">
+        {/* Footer: Theme Toggle & Settings */}
+        <div className="p-4 border-t border-border space-y-3">
+          {/* Theme Toggle */}
+          <div className="flex items-center justify-between px-4 py-2">
+            <span className="text-sm text-muted-foreground">Theme</span>
+            <ThemeToggle size="sm" />
+          </div>
+
+          {/* Settings Link */}
           <Link
             to="/settings"
-            className="flex items-center justify-between gap-3 px-4 py-3 rounded-lg text-slate-500 hover:bg-slate-800/50 transition-all duration-200"
+            className="flex items-center justify-between gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:bg-muted/50 transition-all duration-200"
           >
             <div className="flex items-center gap-3">
               <Settings className="w-5 h-5" aria-hidden="true" />
               <span className="font-medium">Settings</span>
             </div>
-            <span className="flex items-center gap-1 text-xs bg-slate-700/50 text-slate-400 px-2 py-0.5 rounded">
+            <span className="flex items-center gap-1 text-xs bg-surface-elevated/50 text-muted-foreground px-2 py-0.5 rounded">
               <Lock className="w-3 h-3" aria-hidden="true" />
               Soon
             </span>

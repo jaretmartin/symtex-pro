@@ -11,7 +11,7 @@ import { Undo2, Redo2, Save, ExternalLink, Circle } from 'lucide-react';
 import LuxCanvas from '../../../components/lux/LuxCanvas';
 import NodePalette from '../../../components/lux/NodePalette';
 import NaturalLanguageBuilder from '../../../components/lux/NaturalLanguageBuilder';
-import { useWorkflowStore } from '../../../store';
+import { useAutomationStore } from '../../../store';
 import { useToast } from '../../../store/useUIStore';
 import type { Node, Edge } from 'reactflow';
 
@@ -90,12 +90,12 @@ export default function LuxBuilderPage(): JSX.Element {
   const {
     nodes,
     edges,
-    workflowName,
+    automationName,
     isDirty,
     isSaving,
     setNodes,
     setEdges,
-    setWorkflowName,
+    setAutomationName,
     undo,
     redo,
     canUndo,
@@ -103,7 +103,7 @@ export default function LuxBuilderPage(): JSX.Element {
     markClean,
     setSaving,
     addNode,
-  } = useWorkflowStore();
+  } = useAutomationStore();
 
   const toast = useToast();
 
@@ -134,7 +134,7 @@ export default function LuxBuilderPage(): JSX.Element {
             break;
           case 's':
             e.preventDefault();
-            handleSaveWorkflow();
+            handleSaveAutomation();
             break;
         }
       }
@@ -178,21 +178,22 @@ export default function LuxBuilderPage(): JSX.Element {
   }, [addNode]);
 
   const handleAutoSave = useCallback(() => {
-    const workflow = {
-      name: workflowName,
+    const automation = {
+      name: automationName,
       nodes,
       edges,
       savedAt: new Date().toISOString(),
     };
-    localStorage.setItem('lux-workflow-autosave', JSON.stringify(workflow));
-    console.log('Auto-saved workflow');
-  }, [workflowName, nodes, edges]);
+    // Migration: Changed from 'lux-workflow-autosave' to 'lux-automation-autosave' (Wave G)
+    localStorage.setItem('lux-automation-autosave', JSON.stringify(automation));
+    // Auto-saved automation
+  }, [automationName, nodes, edges]);
 
-  const handleSaveWorkflow = useCallback(() => {
+  const handleSaveAutomation = useCallback(() => {
     setSaving(true);
 
-    const workflow = {
-      name: workflowName,
+    const automation = {
+      name: automationName,
       nodes,
       edges,
       savedAt: new Date().toISOString(),
@@ -200,12 +201,13 @@ export default function LuxBuilderPage(): JSX.Element {
 
     // Simulate API call
     setTimeout(() => {
-      localStorage.setItem(`lux-workflow-${Date.now()}`, JSON.stringify(workflow));
+      // Migration: Changed from 'lux-workflow-*' to 'lux-automation-*' (Wave G)
+      localStorage.setItem(`lux-automation-${Date.now()}`, JSON.stringify(automation));
       markClean();
       setSaving(false);
-      toast.success('Workflow saved', 'Your workflow has been saved successfully.');
+      toast.success('Automation saved', 'Your Automation has been saved successfully.');
     }, 500);
-  }, [workflowName, nodes, edges, markClean, setSaving, toast]);
+  }, [automationName, nodes, edges, markClean, setSaving, toast]);
 
   return (
     <div className="lux-builder-page" style={{
@@ -237,8 +239,8 @@ export default function LuxBuilderPage(): JSX.Element {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <input
               type="text"
-              value={workflowName}
-              onChange={(e) => setWorkflowName(e.target.value)}
+              value={automationName}
+              onChange={(e) => setAutomationName(e.target.value)}
               style={{
                 background: 'transparent',
                 border: '1px solid #2a2a3e',
@@ -247,7 +249,7 @@ export default function LuxBuilderPage(): JSX.Element {
                 color: '#fff',
                 fontSize: '14px',
               }}
-              aria-label="Workflow name"
+              aria-label="Automation name"
             />
             {isDirty && (
               <span
@@ -308,7 +310,7 @@ export default function LuxBuilderPage(): JSX.Element {
 
           {/* Save */}
           <button
-            onClick={handleSaveWorkflow}
+            onClick={handleSaveAutomation}
             disabled={isSaving}
             style={{
               padding: '8px 16px',

@@ -65,7 +65,7 @@ function BreadcrumbSegment({
     <li className="flex items-center">
       {!isFirst && (
         <ChevronRight
-          className="w-4 h-4 mx-2 text-slate-600 flex-shrink-0"
+          className="w-4 h-4 mx-2 text-muted-foreground flex-shrink-0"
           aria-hidden="true"
         />
       )}

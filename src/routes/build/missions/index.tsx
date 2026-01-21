@@ -333,7 +333,7 @@ export default function Missions() {
               }
               action={!(searchQuery || selectedPriorities.length > 0 || selectedStatuses.length > 0) ? {
                 label: "Create Mission",
-                onClick: () => console.log("Create mission"),
+                onClick: () => { /* TODO: Implement create mission */ },
                 icon: <Plus className="w-4 h-4" />
               } : undefined}
               secondaryAction={searchQuery || selectedPriorities.length > 0 || selectedStatuses.length > 0 ? {
@@ -374,7 +374,7 @@ export default function Missions() {
                 }
                 action={!(searchQuery || selectedPriorities.length > 0 || selectedStatuses.length > 0) ? {
                   label: "Create Mission",
-                  onClick: () => console.log("Create mission"),
+                  onClick: () => { /* TODO: Implement create mission */ },
                   icon: <Plus className="w-4 h-4" />
                 } : undefined}
                 secondaryAction={searchQuery || selectedPriorities.length > 0 || selectedStatuses.length > 0 ? {

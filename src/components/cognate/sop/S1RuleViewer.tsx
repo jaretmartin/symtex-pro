@@ -12,7 +12,7 @@
  * @module components/cognate/sop/S1RuleViewer
  */
 
-import { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -30,6 +30,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import clsx from 'clsx';
+import DOMPurify from 'dompurify';
 import type { SOP, SOPStatus } from '@/types';
 
 // =============================================================================
@@ -210,13 +211,16 @@ function S1SyntaxHighlight({ code, className }: S1SyntaxHighlightProps): JSX.Ele
     return highlighted;
   }, [code]);
 
+  // Sanitize the highlighted HTML to prevent XSS attacks
+  const sanitizedHtml = DOMPurify.sanitize(highlightedHtml);
+
   return (
     <pre
       className={clsx(
         'text-sm font-mono overflow-x-auto whitespace-pre-wrap text-zinc-300',
         className
       )}
-      dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   );
 }
@@ -230,8 +234,8 @@ interface RuleCardProps {
   sop: SOP;
   /** Whether the card is expanded to show code */
   isExpanded: boolean;
-  /** Callback when card is toggled */
-  onToggle: () => void;
+  /** Callback when card is toggled - receives sopId */
+  onToggle: (sopId: string) => void;
   /** Callback when code is copied */
   onCopy: (code: string) => void;
   /** Compiled S1 code for this SOP */
@@ -246,7 +250,7 @@ interface RuleCardProps {
  * @param props - Component props
  * @returns JSX element for the rule card
  */
-function RuleCard({
+const RuleCard = React.memo(function RuleCard({
   sop,
   isExpanded,
   onToggle,
@@ -269,14 +273,18 @@ function RuleCard({
     [onCopy, compiledS1]
   );
 
+  const handleToggle = useCallback((): void => {
+    onToggle(sop.id);
+  }, [onToggle, sop.id]);
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent): void => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        onToggle();
+        handleToggle();
       }
     },
-    [onToggle]
+    [handleToggle]
   );
 
   return (
@@ -290,7 +298,7 @@ function RuleCard({
       {/* Header */}
       <div
         className="flex items-center justify-between px-4 py-3 bg-zinc-800/50 cursor-pointer hover:bg-zinc-700/50 transition-colors"
-        onClick={onToggle}
+        onClick={handleToggle}
         onKeyDown={handleKeyDown}
         role="button"
         tabIndex={0}
@@ -405,7 +413,7 @@ function RuleCard({
       )}
     </div>
   );
-}
+});
 
 // =============================================================================
 // Stats Panel Component
@@ -747,7 +755,7 @@ export function S1RuleViewer({
               sop={sop}
               compiledS1={compiledS1Map.get(sop.id) || ''}
               isExpanded={expandedSops.includes(sop.id)}
-              onToggle={() => handleToggleExpand(sop.id)}
+              onToggle={handleToggleExpand}
               onCopy={handleCopyCode}
             />
           ))
@@ -785,4 +793,4 @@ export function S1RuleViewer({
   );
 }
 
-export default S1RuleViewer;
+export default React.memo(S1RuleViewer);

@@ -241,7 +241,7 @@ export function LiveMissionFeed({
           <span className="text-sm font-normal text-slate-400">({activeMissionCount} active)</span>
         </h3>
         <Link
-          to="/pulse/missions"
+          to="/missions"
           className="text-sm text-symtex-primary hover:underline flex items-center gap-1"
         >
           View All

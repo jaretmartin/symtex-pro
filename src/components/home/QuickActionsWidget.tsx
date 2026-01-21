@@ -31,9 +31,9 @@ interface QuickActionsWidgetProps {
 
 const quickActions: QuickAction[] = [
   {
-    id: 'new-workflow',
-    title: 'New Workflow',
-    description: 'Create an automation workflow',
+    id: 'new-automation',
+    title: 'New Automation',
+    description: 'Create a new Automation',
     icon: Workflow,
     color: 'text-blue-400',
     bg: 'bg-blue-500/20',
@@ -42,7 +42,7 @@ const quickActions: QuickAction[] = [
   {
     id: 'new-cognate',
     title: 'New Cognate',
-    description: 'Create an AI agent',
+    description: 'Create a Cognate',
     icon: Bot,
     color: 'text-purple-400',
     bg: 'bg-purple-500/20',

@@ -51,7 +51,7 @@ export default function ProgressRing({
         />
       </svg>
       {showPercentage && (
-        <span className="absolute text-xs font-semibold text-white">
+        <span className="absolute text-xs font-semibold text-foreground">
           {Math.round(progress)}%
         </span>
       )}

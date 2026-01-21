@@ -77,16 +77,16 @@ export function EmptyState({
 
 // Pre-built empty states for common scenarios
 
-export function EmptyWorkflows({ className }: BaseEmptyStateProps): JSX.Element {
+export function EmptyAutomations({ className }: BaseEmptyStateProps): JSX.Element {
   const navigate = useNavigate();
 
   return (
     <EmptyState
       icon={<Workflow className="w-8 h-8" />}
-      title="No workflows yet"
-      description="Create your first workflow to automate tasks and streamline your operations."
+      title="No Automations yet"
+      description="Create your first Automation to automate tasks and streamline your operations."
       action={{
-        label: 'Create Workflow',
+        label: 'Create Automation',
         onClick: () => navigate('/studio/lux?new=true'),
         icon: <Plus className="w-4 h-4" />,
       }}
@@ -161,7 +161,7 @@ export function EmptyCanvas({
     <EmptyState
       icon={<Sparkles className="w-8 h-8" />}
       title="Your canvas is empty"
-      description="Drag nodes from the palette or use AI to generate your workflow."
+      description="Drag nodes from the palette or use AI to generate your Automation."
       action={
         onAddNode
           ? {

@@ -221,13 +221,13 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
 
   return (
     <div className={clsx(
-      'bg-symtex-card rounded-xl border border-symtex-border overflow-hidden',
+      'bg-card rounded-xl border border-border overflow-hidden',
       className
     )}>
       {/* Header */}
-      <div className="p-5 border-b border-symtex-border">
+      <div className="p-5 border-b border-border">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Brain className="w-5 h-5 text-symtex-accent" />
             AI Insights
             {insights.filter(i => i.type === 'warning').length > 0 && (
@@ -239,18 +239,18 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors disabled:opacity-50"
+            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-slate-700/50 transition-colors disabled:opacity-50"
           >
             <RefreshCcw className={clsx('w-4 h-4', isRefreshing && 'animate-spin')} />
           </button>
         </div>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-muted-foreground">
           Intelligent recommendations based on your usage patterns
         </p>
       </div>
 
       {/* Category Tabs */}
-      <div className="px-5 py-3 border-b border-symtex-border bg-slate-800/30 overflow-x-auto">
+      <div className="px-5 py-3 border-b border-border bg-surface-card/30 overflow-x-auto">
         <div className="flex items-center gap-1 min-w-max">
           {categories.map((cat) => {
             const count = getCategoryCount(cat.value)
@@ -261,8 +261,8 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
                 className={clsx(
                   'px-3 py-1.5 text-xs rounded-full transition-colors whitespace-nowrap',
                   activeCategory === cat.value
-                    ? 'bg-symtex-primary text-white'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                    ? 'bg-symtex-primary text-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-slate-700/50'
                 )}
               >
                 {cat.label}
@@ -284,11 +284,11 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
       <div className="divide-y divide-symtex-border max-h-[320px] overflow-y-auto">
         {filteredInsights.length === 0 ? (
           <div className="p-8 flex flex-col items-center justify-center text-center">
-            <div className="p-4 rounded-full bg-slate-800 mb-4">
-              <Lightbulb className="w-8 h-8 text-slate-500" />
+            <div className="p-4 rounded-full bg-surface-card mb-4">
+              <Lightbulb className="w-8 h-8 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">No Insights</h3>
-            <p className="text-sm text-slate-400 max-w-xs">
+            <h3 className="text-lg font-semibold text-foreground mb-2">No Insights</h3>
+            <p className="text-sm text-muted-foreground max-w-xs">
               {activeCategory === 'all'
                 ? 'Your AI is analyzing patterns. Check back soon for recommendations.'
                 : `No ${activeCategory} insights at this time.`}
@@ -302,7 +302,7 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
             return (
               <div
                 key={insight.id}
-                className="p-4 hover:bg-slate-800/30 transition-colors group"
+                className="p-4 hover:bg-surface-card/30 transition-colors group"
               >
                 <div className="flex items-start gap-3">
                   <div className={clsx('p-2 rounded-lg flex-shrink-0', config.bg)}>
@@ -311,7 +311,7 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-2 mb-1">
-                      <h4 className="font-medium text-white text-sm">{insight.title}</h4>
+                      <h4 className="font-medium text-foreground text-sm">{insight.title}</h4>
                       <div className="flex items-center gap-1 flex-shrink-0">
                         {insight.impact && (
                           <span className="text-xs font-medium text-green-400 bg-green-500/20 px-2 py-0.5 rounded">
@@ -320,13 +320,13 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
                         )}
                         <button
                           onClick={(e) => handleDismiss(e, insight.id)}
-                          className="p-1 rounded text-slate-500 hover:text-slate-300 hover:bg-slate-700/50 transition-colors opacity-0 group-hover:opacity-100"
+                          className="p-1 rounded text-muted-foreground hover:text-slate-300 hover:bg-slate-700/50 transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
-                    <p className="text-xs text-slate-400">{insight.description}</p>
+                    <p className="text-xs text-muted-foreground">{insight.description}</p>
 
                     <div className="flex items-center justify-between mt-2">
                       {insight.actionable && (
@@ -341,14 +341,14 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
 
                       {/* Feedback buttons */}
                       <div className="flex items-center gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span className="text-xs text-slate-500 mr-1">Helpful?</span>
+                        <span className="text-xs text-muted-foreground mr-1">Helpful?</span>
                         <button
                           onClick={(e) => handleFeedback(e, insight.id, true)}
                           className={clsx(
                             'p-1 rounded transition-colors',
                             insight.helpful === true
                               ? 'bg-green-500/20 text-green-400'
-                              : 'text-slate-500 hover:text-green-400 hover:bg-green-500/10'
+                              : 'text-muted-foreground hover:text-green-400 hover:bg-green-500/10'
                           )}
                         >
                           <ThumbsUp className="w-3 h-3" />
@@ -359,7 +359,7 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
                             'p-1 rounded transition-colors',
                             insight.helpful === false
                               ? 'bg-red-500/20 text-red-400'
-                              : 'text-slate-500 hover:text-red-400 hover:bg-red-500/10'
+                              : 'text-muted-foreground hover:text-red-400 hover:bg-red-500/10'
                           )}
                         >
                           <ThumbsDown className="w-3 h-3" />
@@ -375,14 +375,14 @@ export default function InsightsPanel({ className }: InsightsPanelProps): JSX.El
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-symtex-border bg-slate-800/30 flex items-center justify-between">
-        <p className="text-xs text-slate-500">
+      <div className="p-4 border-t border-border bg-surface-card/30 flex items-center justify-between">
+        <p className="text-xs text-muted-foreground">
           {filteredInsights.length} insight{filteredInsights.length !== 1 ? 's' : ''}
           {activeCategory !== 'all' && ` in ${activeCategory}`}
         </p>
         <button
           onClick={() => navigate('/insights')}
-          className="text-sm text-slate-400 hover:text-white transition-colors"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           View All Insights
         </button>

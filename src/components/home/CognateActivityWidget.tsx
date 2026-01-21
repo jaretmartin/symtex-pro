@@ -42,7 +42,7 @@ const mockActivities: CognateActivity[] = [
     id: 'act-2',
     cognateId: 'cog-1',
     cognateName: 'Customer Support Agent',
-    action: 'Escalated complex query to human agent',
+    action: 'Escalated complex query to human support',
     timestamp: '15 min ago',
     type: 'escalation'
   },

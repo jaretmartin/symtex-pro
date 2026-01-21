@@ -24,7 +24,7 @@ export interface UserPreferences {
 export interface NotificationPreferences {
   email: boolean;
   push: boolean;
-  workflowFailures: boolean;
+  automationFailures: boolean;
   weeklyDigest: boolean;
 }
 

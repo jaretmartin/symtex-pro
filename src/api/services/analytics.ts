@@ -26,9 +26,8 @@ export const analyticsService = {
       sessionId: getSessionId(),
     };
 
-    // In development, just log to console
+    // In development, skip sending analytics
     if (import.meta.env.DEV) {
-      console.log('[Analytics]', payload);
       return;
     }
 
@@ -65,26 +64,26 @@ export const analyticsService = {
   },
 
   /**
-   * Track workflow created
+   * Track automation created
    */
-  workflowCreated: async (workflowId: string, nodeCount: number): Promise<void> => {
+  automationCreated: async (automationId: string, nodeCount: number): Promise<void> => {
     return analyticsService.track({
-      type: 'workflow_created',
-      properties: { workflowId, nodeCount },
+      type: 'automation_created',
+      properties: { automationId, nodeCount },
     });
   },
 
   /**
-   * Track workflow executed
+   * Track automation executed
    */
-  workflowExecuted: async (
-    workflowId: string,
+  automationExecuted: async (
+    automationId: string,
     success: boolean,
     duration?: number
   ): Promise<void> => {
     return analyticsService.track({
-      type: 'workflow_executed',
-      properties: { workflowId, success, duration },
+      type: 'automation_executed',
+      properties: { automationId, success, duration },
     });
   },
 

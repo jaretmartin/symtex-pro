@@ -517,11 +517,11 @@ const Graph3DVisualization: React.FC<Graph3DProps> = ({ nodes, selectedNode, onN
   return (
     <div className="relative w-full h-full">
       {/* 3D/2D Toggle */}
-      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-gray-900/80 backdrop-blur-sm rounded-lg p-1">
+      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-surface-base/80 backdrop-blur-sm rounded-lg p-1">
         <button
           onClick={() => setIs3D(true)}
           className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-            is3D ? 'bg-symtex-purple text-white' : 'text-gray-400 hover:text-white'
+            is3D ? 'bg-symtex-purple text-white' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           <CubeIcon />
@@ -530,7 +530,7 @@ const Graph3DVisualization: React.FC<Graph3DProps> = ({ nodes, selectedNode, onN
         <button
           onClick={() => setIs3D(false)}
           className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-            !is3D ? 'bg-symtex-purple text-white' : 'text-gray-400 hover:text-white'
+            !is3D ? 'bg-symtex-purple text-white' : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           <SquareIcon />
@@ -539,7 +539,7 @@ const Graph3DVisualization: React.FC<Graph3DProps> = ({ nodes, selectedNode, onN
       </div>
 
       {/* Instructions */}
-      <div className="absolute bottom-4 left-4 z-10 text-xs text-gray-500 bg-gray-900/60 backdrop-blur-sm rounded-lg px-3 py-2">
+      <div className="absolute bottom-4 left-4 z-10 text-xs text-muted-foreground bg-surface-base/60 backdrop-blur-sm rounded-lg px-3 py-2">
         Drag to rotate {is3D ? '3D' : '2D'} view | Click nodes to select
       </div>
 
@@ -588,7 +588,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, isSelected, onCli
         className={`w-full text-left p-3 rounded-xl transition-all duration-200 ${
           isSelected
             ? 'bg-symtex-purple/20 border border-symtex-purple'
-            : 'bg-gray-800/50 border border-transparent hover:bg-gray-800 hover:border-gray-700'
+            : 'bg-surface-card/50 border border-transparent hover:bg-surface-card hover:border-border'
         }`}
       >
         <div className="flex items-center gap-3">
@@ -597,7 +597,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, isSelected, onCli
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="text-sm font-medium text-white truncate">{document.title}</h4>
-            <p className="text-xs text-gray-500">{config.label} | {document.connections} connections</p>
+            <p className="text-xs text-muted-foreground">{config.label} | {document.connections} connections</p>
           </div>
         </div>
       </button>
@@ -610,7 +610,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, isSelected, onCli
       className={`w-full text-left p-4 rounded-xl transition-all duration-200 group ${
         isSelected
           ? 'bg-symtex-purple/20 border-2 border-symtex-purple shadow-lg shadow-symtex-purple/20'
-          : 'bg-gray-800/50 border border-gray-800 hover:bg-gray-800/80 hover:border-gray-700'
+          : 'bg-surface-card/50 border border-border hover:bg-surface-card/80 hover:border-border'
       }`}
     >
       {/* Header */}
@@ -632,26 +632,26 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, isSelected, onCli
       </div>
 
       {/* Excerpt */}
-      <p className="text-sm text-gray-400 mb-3 line-clamp-2">
+      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
         {document.excerpt}
       </p>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5 mb-3">
         {document.tags.map((tag) => (
-          <span key={tag} className="px-2 py-0.5 bg-gray-700/50 rounded text-xs text-gray-400">
+          <span key={tag} className="px-2 py-0.5 bg-surface-elevated/50 rounded text-xs text-muted-foreground">
             {tag}
           </span>
         ))}
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-3 border-t border-gray-700/50">
-        <div className="flex items-center gap-1 text-xs text-gray-500">
+      <div className="flex items-center justify-between pt-3 border-t border-border/50">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground">
           <LinkIcon />
           <span>{document.connections} connections</span>
         </div>
-        <div className="flex items-center gap-1 text-xs text-gray-500">
+        <div className="flex items-center gap-1 text-xs text-muted-foreground">
           <ClockIcon />
           <span>{formatDate(document.updatedAt)}</span>
         </div>
@@ -695,9 +695,9 @@ const DocumentList: React.FC<DocumentListProps> = ({
   return (
     <div className="flex flex-col h-full">
       {/* Search */}
-      <div className="p-4 border-b border-gray-800">
+      <div className="p-4 border-b border-border">
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
             <SearchIcon />
           </div>
           <input
@@ -705,7 +705,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
             placeholder="Search documents..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-800/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-symtex-purple focus:ring-1 focus:ring-symtex-purple transition-all text-sm"
+            className="w-full pl-10 pr-4 py-2.5 bg-surface-card/50 border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:border-symtex-purple focus:ring-1 focus:ring-symtex-purple transition-all text-sm"
           />
         </div>
       </div>
@@ -723,7 +723,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
         ))}
 
         {filteredDocs.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             <DocumentIcon />
             <p className="mt-2">No documents found</p>
           </div>
@@ -731,7 +731,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
       </div>
 
       {/* Add Document Button */}
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-4 border-t border-border">
         <button className="w-full py-2.5 px-4 bg-symtex-purple/20 hover:bg-symtex-purple/30 border border-symtex-purple/50 hover:border-symtex-purple text-symtex-purple hover:text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2">
           <PlusIcon />
           <span>Add Document</span>
@@ -762,16 +762,16 @@ const KnowledgePage: React.FC = () => {
   }, [selectedDocument]);
 
   return (
-    <div className="h-screen bg-gray-950 text-white flex flex-col">
+    <div className="h-screen bg-background text-foreground flex flex-col">
       {/* Header */}
-      <div className="border-b border-gray-800 bg-gray-950/80 backdrop-blur-xl z-40 flex-shrink-0">
+      <div className="border-b border-border bg-background/80 backdrop-blur-xl z-40 flex-shrink-0">
         <div className="max-w-full px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                 Knowledge Base
               </h1>
-              <p className="text-gray-500 text-sm mt-0.5">
+              <p className="text-muted-foreground text-sm mt-0.5">
                 {MOCK_DOCUMENTS.length} documents | {graphNodes.reduce((acc, n) => acc + n.connections.length, 0)} connections
               </p>
             </div>
@@ -789,11 +789,11 @@ const KnowledgePage: React.FC = () => {
                 </button>
               )}
 
-              <div className="flex items-center gap-1 bg-gray-800/50 rounded-lg p-1">
+              <div className="flex items-center gap-1 bg-surface-card/50 rounded-lg p-1">
                 <button
                   onClick={() => { setViewMode('3d'); setIsGraphFullscreen(false); }}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                    viewMode === '3d' ? 'bg-symtex-purple text-white' : 'text-gray-400 hover:text-white'
+                    viewMode === '3d' ? 'bg-symtex-purple text-white' : 'text-muted-foreground hover:text-foreground'
                   }`}
                   title="Graph View"
                 >
@@ -803,7 +803,7 @@ const KnowledgePage: React.FC = () => {
                 <button
                   onClick={() => { setViewMode('split'); setIsGraphFullscreen(false); }}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                    viewMode === 'split' ? 'bg-symtex-purple text-white' : 'text-gray-400 hover:text-white'
+                    viewMode === 'split' ? 'bg-symtex-purple text-white' : 'text-muted-foreground hover:text-foreground'
                   }`}
                   title="Split View"
                 >
@@ -813,7 +813,7 @@ const KnowledgePage: React.FC = () => {
                 <button
                   onClick={() => { setViewMode('2d'); setIsGraphFullscreen(false); }}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all ${
-                    viewMode === '2d' ? 'bg-symtex-purple text-white' : 'text-gray-400 hover:text-white'
+                    viewMode === '2d' ? 'bg-symtex-purple text-white' : 'text-muted-foreground hover:text-foreground'
                   }`}
                   title="Document View"
                 >
@@ -840,15 +840,15 @@ const KnowledgePage: React.FC = () => {
 
             {/* Selected Document Info Overlay */}
             {selectedDoc && (
-              <div className="absolute bottom-4 right-4 w-80 bg-gray-900/95 backdrop-blur-sm rounded-xl border border-gray-800 p-4 shadow-xl">
+              <div className="absolute bottom-4 right-4 w-80 bg-surface-base/95 backdrop-blur-sm rounded-xl border border-border p-4 shadow-xl">
                 <div className="flex items-start gap-3">
                   <div className={`p-2 rounded-lg ${DOCUMENT_TYPE_CONFIG[selectedDoc.type].bgColor} ${DOCUMENT_TYPE_CONFIG[selectedDoc.type].color}`}>
                     {DOCUMENT_TYPE_CONFIG[selectedDoc.type].icon}
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-white truncate">{selectedDoc.title}</h4>
-                    <p className="text-sm text-gray-400 mt-1 line-clamp-2">{selectedDoc.excerpt}</p>
-                    <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
+                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{selectedDoc.excerpt}</p>
+                    <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                       <span>{selectedDoc.connections} connections</span>
                       <span>{selectedDoc.size}</span>
                     </div>
@@ -864,7 +864,7 @@ const KnowledgePage: React.FC = () => {
             {isGraphFullscreen && (
               <button
                 onClick={() => setIsGraphFullscreen(false)}
-                className="absolute top-4 right-4 p-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-gray-400 hover:text-white transition-colors"
+                className="absolute top-4 right-4 p-2 bg-surface-card hover:bg-surface-elevated rounded-lg text-muted-foreground hover:text-foreground transition-colors"
               >
                 <CollapseIcon />
               </button>
@@ -891,7 +891,7 @@ const KnowledgePage: React.FC = () => {
         {viewMode === 'split' && (
           <div className="h-full flex">
             {/* Documents Panel */}
-            <div className="w-[400px] xl:w-[450px] border-r border-gray-800 flex-shrink-0 bg-gray-900/30">
+            <div className="w-[400px] xl:w-[450px] border-r border-border flex-shrink-0 bg-surface-base/30">
               <DocumentList
                 documents={MOCK_DOCUMENTS}
                 selectedId={selectedDocument}
@@ -911,13 +911,13 @@ const KnowledgePage: React.FC = () => {
               />
 
               {/* Graph Legend */}
-              <div className="absolute top-4 right-4 bg-gray-900/80 backdrop-blur-sm rounded-lg p-3 border border-gray-800">
-                <p className="text-xs font-medium text-gray-400 mb-2">Document Types</p>
+              <div className="absolute top-4 right-4 bg-surface-base/80 backdrop-blur-sm rounded-lg p-3 border border-border">
+                <p className="text-xs font-medium text-muted-foreground mb-2">Document Types</p>
                 <div className="space-y-1.5">
                   {Object.entries(DOCUMENT_TYPE_CONFIG).map(([type, config]) => (
                     <div key={type} className="flex items-center gap-2">
                       <div className={`w-3 h-3 rounded-full ${config.bgColor}`} style={{ backgroundColor: type === 'pdf' ? '#EF4444' : type === 'note' ? '#F59E0B' : type === 'article' ? '#3B82F6' : type === 'research' ? '#8B5CF6' : type === 'image' ? '#22C55E' : '#EC4899' }} />
-                      <span className="text-xs text-gray-400">{config.label}</span>
+                      <span className="text-xs text-muted-foreground">{config.label}</span>
                     </div>
                   ))}
                 </div>
@@ -925,18 +925,18 @@ const KnowledgePage: React.FC = () => {
 
               {/* Selected Document Details */}
               {selectedDoc && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[500px] max-w-[90%] bg-gray-900/95 backdrop-blur-sm rounded-xl border border-symtex-purple/50 p-4 shadow-xl shadow-symtex-purple/10">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[500px] max-w-[90%] bg-surface-base/95 backdrop-blur-sm rounded-xl border border-symtex-purple/50 p-4 shadow-xl shadow-symtex-purple/10">
                   <div className="flex items-start gap-4">
                     <div className={`p-3 rounded-xl ${DOCUMENT_TYPE_CONFIG[selectedDoc.type].bgColor} ${DOCUMENT_TYPE_CONFIG[selectedDoc.type].color}`}>
                       {DOCUMENT_TYPE_CONFIG[selectedDoc.type].icon}
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-white">{selectedDoc.title}</h4>
-                      <p className="text-sm text-gray-400 mt-1">{selectedDoc.excerpt}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{selectedDoc.excerpt}</p>
                       <div className="flex items-center gap-4 mt-3">
-                        <span className="text-xs text-gray-500">{selectedDoc.connections} connections</span>
-                        <span className="text-xs text-gray-500">{selectedDoc.size}</span>
-                        <span className="text-xs text-gray-500">by {selectedDoc.author}</span>
+                        <span className="text-xs text-muted-foreground">{selectedDoc.connections} connections</span>
+                        <span className="text-xs text-muted-foreground">{selectedDoc.size}</span>
+                        <span className="text-xs text-muted-foreground">by {selectedDoc.author}</span>
                       </div>
                     </div>
                     <button className="px-4 py-2 bg-symtex-purple hover:bg-purple-600 text-white text-sm font-medium rounded-lg transition-colors flex-shrink-0">

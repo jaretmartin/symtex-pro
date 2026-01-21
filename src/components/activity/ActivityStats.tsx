@@ -112,7 +112,7 @@ export default function ActivityStats() {
           {[
             { action: 'Customer support query resolved', time: '2 min ago', type: 'success' },
             { action: 'Data pipeline completed', time: '15 min ago', type: 'success' },
-            { action: 'New automation workflow created', time: '1 hour ago', type: 'info' },
+            { action: 'New Automation created', time: '1 hour ago', type: 'info' },
             { action: 'Security scan completed', time: '2 hours ago', type: 'warning' }
           ].map((item, index) => (
             <div key={index} className="flex items-center gap-3">

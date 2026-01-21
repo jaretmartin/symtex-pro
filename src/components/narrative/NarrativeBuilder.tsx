@@ -376,9 +376,9 @@ export function NarrativeBuilder({
                 {/* Chapter List */}
                 <NarrativeStoryView
                   story={story}
-                  onEditChapter={(chapterId) => {
+                  onEditChapter={(_chapterId) => {
                     // In a real app, this would open an edit modal
-                    console.log('Edit chapter:', chapterId);
+                    // Edit chapter: chapterId
                   }}
                   onDeleteChapter={onChapterDelete}
                   onFieldChange={handleFieldChange}
@@ -418,7 +418,7 @@ export function NarrativeBuilder({
               <h4 className="text-sm font-medium text-symtex-primary mb-2">Tips</h4>
               <ul className="text-xs text-slate-400 space-y-1.5">
                 <li>Action chapters cost more due to API calls</li>
-                <li>Decision chapters branch your workflow</li>
+                <li>Decision chapters branch your Automation</li>
                 <li>Milestones help track progress</li>
               </ul>
             </div>

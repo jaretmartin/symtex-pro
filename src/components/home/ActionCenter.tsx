@@ -212,21 +212,21 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
   if (actions.length === 0) {
     return (
       <div className={clsx(
-        'bg-symtex-card rounded-xl border border-symtex-border overflow-hidden',
+        'bg-card rounded-xl border border-border overflow-hidden',
         className
       )}>
-        <div className="p-5 border-b border-symtex-border flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <div className="p-5 border-b border-border flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
             <Play className="w-5 h-5 text-symtex-primary" />
             Action Center
           </h2>
         </div>
         <div className="p-8 flex flex-col items-center justify-center text-center">
-          <div className="p-4 rounded-full bg-slate-800 mb-4">
-            <Inbox className="w-8 h-8 text-slate-500" />
+          <div className="p-4 rounded-full bg-surface-card mb-4">
+            <Inbox className="w-8 h-8 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold text-white mb-2">All Caught Up!</h3>
-          <p className="text-sm text-slate-400 max-w-xs">
+          <h3 className="text-lg font-semibold text-foreground mb-2">All Caught Up!</h3>
+          <p className="text-sm text-muted-foreground max-w-xs">
             No pending actions require your attention. Your AI systems are running smoothly.
           </p>
         </div>
@@ -236,12 +236,12 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
 
   return (
     <div className={clsx(
-      'bg-symtex-card rounded-xl border border-symtex-border overflow-hidden',
+      'bg-card rounded-xl border border-border overflow-hidden',
       className
     )}>
       {/* Header */}
-      <div className="p-5 border-b border-symtex-border flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+      <div className="p-5 border-b border-border flex items-center justify-between">
+        <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
           <Play className="w-5 h-5 text-symtex-primary" />
           Action Center
           {actions.filter(a => a.type === 'urgent').length > 0 && (
@@ -257,7 +257,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
               'p-2 rounded-lg transition-colors',
               showFilters || activeFilter
                 ? 'bg-symtex-primary/20 text-symtex-primary'
-                : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                : 'text-muted-foreground hover:text-foreground hover:bg-surface-elevated/50'
             )}
           >
             <Filter className="w-4 h-4" />
@@ -275,7 +275,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
 
       {/* Filter Bar */}
       {showFilters && (
-        <div className="px-5 py-3 border-b border-symtex-border bg-slate-800/30 flex items-center gap-2 flex-wrap">
+        <div className="px-5 py-3 border-b border-border bg-surface-card/30 flex items-center gap-2 flex-wrap">
           {filterOptions.map((type) => {
             const config = typeConfig[type]
             const count = actions.filter(a => a.type === type).length
@@ -287,7 +287,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
                   'text-xs px-3 py-1.5 rounded-full border transition-colors flex items-center gap-1.5',
                   activeFilter === type
                     ? `${config.bg} ${config.border} ${config.color}`
-                    : 'border-symtex-border text-slate-400 hover:text-white hover:border-slate-500'
+                    : 'border-border text-muted-foreground hover:text-foreground hover:border-slate-500'
                 )}
               >
                 <config.icon className="w-3 h-3" />
@@ -295,7 +295,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
                 {count > 0 && (
                   <span className={clsx(
                     'text-xs px-1.5 rounded-full',
-                    activeFilter === type ? 'bg-white/20' : 'bg-slate-700'
+                    activeFilter === type ? 'bg-white/20' : 'bg-surface-elevated'
                   )}>
                     {count}
                   </span>
@@ -306,7 +306,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
           {activeFilter && (
             <button
               onClick={() => setActiveFilter(null)}
-              className="text-xs text-slate-400 hover:text-white transition-colors ml-auto"
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors ml-auto"
             >
               Clear filter
             </button>
@@ -318,7 +318,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
       <div className="divide-y divide-symtex-border max-h-[400px] overflow-y-auto">
         {filteredActions.length === 0 ? (
           <div className="p-6 text-center">
-            <p className="text-sm text-slate-400">No actions match this filter</p>
+            <p className="text-sm text-muted-foreground">No actions match this filter</p>
           </div>
         ) : (
           filteredActions.map((action) => {
@@ -330,7 +330,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
                 key={action.id}
                 onClick={() => handleActionClick(action)}
                 className={clsx(
-                  'p-4 flex items-start gap-4 hover:bg-slate-800/30 transition-colors cursor-pointer group',
+                  'p-4 flex items-start gap-4 hover:bg-surface-card/30 transition-colors cursor-pointer group',
                   action.type === 'completed' && 'opacity-60'
                 )}
               >
@@ -340,7 +340,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-medium text-white truncate group-hover:text-symtex-primary transition-colors">
+                    <h4 className="font-medium text-foreground truncate group-hover:text-symtex-primary transition-colors">
                       {action.title}
                     </h4>
                     {action.automatable && (
@@ -353,9 +353,9 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
                       </button>
                     )}
                   </div>
-                  <p className="text-sm text-slate-400 truncate">{action.description}</p>
+                  <p className="text-sm text-muted-foreground truncate">{action.description}</p>
                   {action.time && action.type !== 'completed' && (
-                    <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {action.time}
                     </p>
@@ -366,7 +366,7 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
                   {action.dismissible && (
                     <button
                       onClick={(e) => handleDismiss(e, action.id)}
-                      className="p-1.5 rounded-lg text-slate-500 hover:text-slate-300 hover:bg-slate-700/50 transition-colors opacity-0 group-hover:opacity-100"
+                      className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-surface-elevated/50 transition-colors opacity-0 group-hover:opacity-100"
                     >
                       <X className="w-4 h-4" />
                     </button>
@@ -387,14 +387,14 @@ export default function ActionCenter({ className }: ActionCenterProps): JSX.Elem
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-symtex-border bg-slate-800/30 flex items-center justify-between">
-        <p className="text-xs text-slate-500">
+      <div className="p-4 border-t border-border bg-surface-card/30 flex items-center justify-between">
+        <p className="text-xs text-muted-foreground">
           {filteredActions.length} action{filteredActions.length !== 1 ? 's' : ''}
           {activeFilter && ` (filtered)`}
         </p>
         <button
           onClick={() => navigate('/actions')}
-          className="text-sm text-slate-400 hover:text-white transition-colors"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           View All Actions
         </button>

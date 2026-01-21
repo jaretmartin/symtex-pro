@@ -406,7 +406,7 @@ export function AriaChat({
         setTimeout(() => {
           const mockCognate: Cognate = {
             id: 'cog-1',
-            name: 'Customer Support Agent',
+            name: 'Customer Support Cognate',
             description: 'Handles customer inquiries',
             status: 'active',
             createdAt: '',

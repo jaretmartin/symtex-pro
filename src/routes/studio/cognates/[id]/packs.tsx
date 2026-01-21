@@ -52,7 +52,7 @@ const MOCK_PACKS: SOPPack[] = [
   {
     id: 'pack-3',
     name: 'Customer Support Essentials',
-    description: 'Core SOPs for customer support agents. Handles greetings, escalations, feedback collection, and issue resolution.',
+    description: 'Core SOPs for customer support Cognates. Handles greetings, escalations, feedback collection, and issue resolution.',
     type: 'role',
     sopCount: 15,
     installCount: 3421,
@@ -94,7 +94,7 @@ const MOCK_PACKS: SOPPack[] = [
   {
     id: 'pack-6',
     name: 'Content Writing Assistant',
-    description: 'SOPs for content creation workflows. Includes style guides, SEO optimization, and editorial review processes.',
+    description: 'SOPs for content creation Automations. Includes style guides, SEO optimization, and editorial review processes.',
     type: 'role',
     sopCount: 7,
     installCount: 654,

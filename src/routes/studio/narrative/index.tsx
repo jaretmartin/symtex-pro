@@ -145,7 +145,7 @@ export default function NarrativePage(): JSX.Element {
               Narrative Builder
             </h1>
             <p className="text-slate-400 mt-1">
-              Create story-driven automation workflows with natural language
+              Create story-driven Automations with natural language
             </p>
           </div>
         </div>
@@ -203,7 +203,7 @@ export default function NarrativePage(): JSX.Element {
           <BookText className="w-16 h-16 text-slate-600 mb-4" aria-hidden="true" />
           <h2 className="text-xl font-semibold text-white mb-2">No Stories Yet</h2>
           <p className="text-slate-400 mb-6">
-            Create your first narrative-driven automation workflow
+            Create your first narrative-driven Automation
           </p>
           <button
             type="button"

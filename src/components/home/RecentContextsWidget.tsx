@@ -50,7 +50,7 @@ const mockContexts: RecentContext[] = [
     id: 'ctx-2',
     name: 'Customer Support KB',
     type: 'domain',
-    description: 'Knowledge base for support agents',
+    description: 'Knowledge base for support Cognates',
     lastAccessed: '1 hour ago',
     isPinned: false,
     isFavorite: true,
@@ -175,7 +175,7 @@ export default function RecentContextsWidget({
           </div>
           <h3 className="text-lg font-semibold text-white mb-2">No Contexts Yet</h3>
           <p className="text-sm text-slate-400 max-w-xs mb-4">
-            Create your first context to organize knowledge for your AI agents.
+            Create your first context to organize knowledge for your Cognates.
           </p>
           <button
             onClick={() => navigate('/spaces/new')}

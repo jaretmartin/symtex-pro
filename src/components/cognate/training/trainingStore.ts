@@ -112,7 +112,7 @@ const mockStyles: CommunicationStyle[] = [
     category: 'creative',
     description: 'Consistent brand personality across all communications',
     adoptionRate: 84,
-    examples: 'At Symtex, we believe in empowering your workflow...',
+    examples: 'At Symtex, we believe in empowering your Automations...',
     tags: ['Branding', 'Consistency', 'Voice'],
   },
   {
@@ -153,7 +153,7 @@ const mockCognates: TrainingCognate[] = [
   },
   {
     id: 'cog-002',
-    name: 'Support Agent',
+    name: 'Support Cognate',
     avatar: '02',
     shadowProgress: 100,
     currentWeek: 6,

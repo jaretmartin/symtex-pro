@@ -5,7 +5,7 @@ export default function NaturalLanguageBuilder() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
-  const handleGenerateWorkflow = () => {
+  const handleGenerateAutomation = () => {
     if (!prompt.trim()) {
       return;
     }
@@ -27,7 +27,7 @@ export default function NaturalLanguageBuilder() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleGenerateWorkflow();
+      handleGenerateAutomation();
     }
   };
 
@@ -43,8 +43,8 @@ export default function NaturalLanguageBuilder() {
       <div
         style={{
           padding: '16px 24px',
-          backgroundColor: '#0f0f1a',
-          borderBottom: '1px solid #1e1e2e',
+          backgroundColor: 'var(--color-surface-base)',
+          borderBottom: '1px solid var(--color-border)',
         }}
       >
         <div
@@ -78,7 +78,7 @@ export default function NaturalLanguageBuilder() {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Describe your workflow in natural language... e.g., 'When a new lead arrives, send a welcome email'"
+              placeholder="Describe your Automation in natural language... e.g., 'When a new lead arrives, send a welcome email'"
               style={{
                 width: '100%',
                 padding: '14px 16px 14px 48px',
@@ -99,7 +99,7 @@ export default function NaturalLanguageBuilder() {
             />
           </div>
           <button
-            onClick={handleGenerateWorkflow}
+            onClick={handleGenerateAutomation}
             disabled={isGenerating || !prompt.trim()}
             style={{
               padding: '14px 24px',
@@ -137,7 +137,7 @@ export default function NaturalLanguageBuilder() {
             ) : (
               <>
                 <span>🤖</span>
-                Generate Workflow
+                Generate Automation
               </>
             )}
           </button>
@@ -230,10 +230,10 @@ export default function NaturalLanguageBuilder() {
                 marginBottom: '4px',
               }}
             >
-              AI Workflow Generation Coming Soon!
+              AI Automation Generation Coming Soon!
             </div>
             <div style={{ fontSize: '12px', color: '#94a3b8' }}>
-              We're working on AI-powered workflow creation. Stay tuned!
+              We're working on AI-powered Automation creation. Stay tuned!
             </div>
           </div>
           <button

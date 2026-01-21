@@ -92,7 +92,7 @@ export function SkillBadges({
         <span
           className={clsx(
             'inline-flex items-center rounded-lg font-medium',
-            'bg-slate-700/50 text-slate-400',
+            'bg-surface-elevated/50 text-muted-foreground',
             config.padding,
             config.fontSize
           )}
@@ -171,7 +171,7 @@ export function SkillBadge({
         <div
           className={clsx(
             'absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2',
-            'px-3 py-2 rounded-lg bg-slate-800 border border-slate-700',
+            'px-3 py-2 rounded-lg bg-surface-card border border-border',
             'shadow-xl max-w-xs'
           )}
         >
@@ -181,14 +181,14 @@ export function SkillBadge({
               {SKILL_PROFICIENCY_CONFIG[skill.proficiency].label}
             </span>
           </div>
-          <p className="text-xs text-slate-400">{skill.description}</p>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-muted-foreground">{skill.description}</p>
+          <p className="text-xs text-muted-foreground mt-1">
             Category: {SKILL_CATEGORY_CONFIG[skill.category].label}
           </p>
           <div
             className={clsx(
               'absolute top-full left-1/2 -translate-x-1/2',
-              'border-4 border-transparent border-t-slate-800'
+              'border-4 border-transparent border-t-surface-card'
             )}
           />
         </div>
@@ -246,7 +246,7 @@ export function SkillList({ skills, className }: SkillListProps): JSX.Element {
       {skills.map((skill) => (
         <div
           key={skill.id}
-          className="flex items-center justify-between p-2 rounded-lg bg-slate-800/50"
+          className="flex items-center justify-between p-2 rounded-lg bg-surface-card/50"
         >
           <div className="flex items-center gap-2">
             {(() => {

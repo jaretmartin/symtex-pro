@@ -180,7 +180,7 @@ export interface ConversationParticipant {
   /** Unique identifier for the participant */
   id: string;
   /** Type of participant */
-  type: 'user' | 'agent';
+  type: 'user' | 'cognate';
   /** Display name */
   name: string;
   /** Avatar URL */

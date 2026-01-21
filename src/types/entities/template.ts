@@ -1,5 +1,8 @@
 /**
  * Template entity types
+ *
+ * NOTE: Use canonical Symtex terminology:
+ * - Automations (not workflows)
  */
 
 export type TemplateCategory =
@@ -32,7 +35,7 @@ export interface Template {
   requiredIntegrations: string[];
 }
 
-export interface TemplateWorkflow {
+export interface TemplateAutomation {
   templateId: string;
   nodes: unknown[];
   edges: unknown[];
@@ -48,3 +51,10 @@ export interface TemplateVariable {
   defaultValue?: unknown;
   options?: string[];
 }
+
+// ============================================================================
+// DEPRECATED TYPE ALIASES (Backwards Compatibility)
+// ============================================================================
+
+/** @deprecated Use TemplateAutomation instead */
+export type TemplateWorkflow = TemplateAutomation;

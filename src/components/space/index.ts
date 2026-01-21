@@ -12,3 +12,4 @@ export { CreateProjectModal } from './CreateProjectModal';
 export { CreateMissionModal } from './CreateMissionModal';
 export { SpaceSettingsPanel } from './SpaceSettingsPanel';
 export { DomainCard } from './DomainCard';
+export { default as SpaceSwitcher } from './SpaceSwitcher';

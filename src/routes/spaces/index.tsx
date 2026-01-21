@@ -42,7 +42,7 @@ function DomainCard({
   return (
     <div
       className={clsx(
-        'bg-symtex-card rounded-xl border border-symtex-border p-6',
+        'bg-card rounded-xl border border-border p-6',
         'hover:border-slate-600 transition-all duration-200 cursor-pointer group'
       )}
       onClick={onSelect}
@@ -71,7 +71,7 @@ function DomainCard({
             e.stopPropagation();
             onEdit?.();
           }}
-          className="p-2 rounded-lg text-slate-500 hover:text-white hover:bg-slate-700 opacity-0 group-hover:opacity-100 transition-all"
+          className="p-2 rounded-lg text-muted-foreground hover:text-white hover:bg-slate-700 opacity-0 group-hover:opacity-100 transition-all"
           aria-label={`Edit ${domain.name}`}
         >
           <MoreHorizontal className="w-4 h-4" aria-hidden="true" />
@@ -82,11 +82,11 @@ function DomainCard({
       <div className="mb-4" />
 
       <div className="flex items-center justify-between">
-        <span className="text-sm text-slate-500">
+        <span className="text-sm text-muted-foreground">
           {projectCount} {projectCount === 1 ? 'project' : 'projects'}
         </span>
         <ChevronRight
-          className="w-5 h-5 text-slate-500 group-hover:text-symtex-primary transition-colors"
+          className="w-5 h-5 text-muted-foreground group-hover:text-symtex-primary transition-colors"
           aria-hidden="true"
         />
       </div>
@@ -112,13 +112,13 @@ function ProjectCard({
     active: 'bg-green-500/20 text-green-400',
     planning: 'bg-blue-500/20 text-blue-400',
     paused: 'bg-yellow-500/20 text-yellow-400',
-    completed: 'bg-slate-500/20 text-slate-400',
+    completed: 'bg-slate-500/20 text-muted-foreground',
   };
 
   return (
     <div
       className={clsx(
-        'bg-symtex-card rounded-xl border border-symtex-border p-5',
+        'bg-card rounded-xl border border-border p-5',
         'hover:border-slate-600 transition-all duration-200 cursor-pointer group'
       )}
       onClick={onSelect}
@@ -150,11 +150,11 @@ function ProjectCard({
       </div>
 
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-500">
+        <span className="text-muted-foreground">
           {missionCount} {missionCount === 1 ? 'mission' : 'missions'}
         </span>
         <ChevronRight
-          className="w-4 h-4 text-slate-500 group-hover:text-symtex-primary transition-colors"
+          className="w-4 h-4 text-muted-foreground group-hover:text-symtex-primary transition-colors"
           aria-hidden="true"
         />
       </div>
@@ -252,7 +252,7 @@ export default function SpacesPage(): JSX.Element {
           navigate('/spaces');
         }}
         className={clsx(
-          'text-slate-400 hover:text-white transition-colors',
+          'text-muted-foreground hover:text-white transition-colors',
           !domainId && 'text-symtex-primary'
         )}
       >
@@ -260,7 +260,7 @@ export default function SpacesPage(): JSX.Element {
       </button>
       {selectedDomain && (
         <>
-          <ChevronRight className="w-4 h-4 text-slate-600" aria-hidden="true" />
+          <ChevronRight className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <button
             type="button"
             onClick={() => {
@@ -268,7 +268,7 @@ export default function SpacesPage(): JSX.Element {
               navigate(`/spaces/${selectedDomain.id}`);
             }}
             className={clsx(
-              'text-slate-400 hover:text-white transition-colors',
+              'text-muted-foreground hover:text-white transition-colors',
               !projectId && 'text-symtex-primary'
             )}
           >
@@ -278,7 +278,7 @@ export default function SpacesPage(): JSX.Element {
       )}
       {selectedProject && (
         <>
-          <ChevronRight className="w-4 h-4 text-slate-600" aria-hidden="true" />
+          <ChevronRight className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
           <span className="text-symtex-primary">{selectedProject.name}</span>
         </>
       )}
@@ -291,14 +291,14 @@ export default function SpacesPage(): JSX.Element {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-xl font-semibold text-white">Domains</h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-muted-foreground text-sm">
             Organize your work into logical domains
           </p>
         </div>
         <button
           type="button"
           onClick={() => handleAddNew('domain')}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-symtex-card border border-symtex-border text-slate-300 hover:text-white hover:border-slate-500 transition-all text-sm"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border text-slate-300 hover:text-white hover:border-border transition-all text-sm"
         >
           <Plus className="w-4 h-4" aria-hidden="true" />
           New Domain
@@ -317,10 +317,10 @@ export default function SpacesPage(): JSX.Element {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center min-h-[300px] bg-symtex-card rounded-xl border border-symtex-border">
-          <Folder className="w-12 h-12 text-slate-600 mb-4" aria-hidden="true" />
+        <div className="flex flex-col items-center justify-center min-h-[300px] bg-card rounded-xl border border-border">
+          <Folder className="w-12 h-12 text-muted-foreground mb-4" aria-hidden="true" />
           <h3 className="text-lg font-semibold text-white mb-2">No Domains Yet</h3>
-          <p className="text-slate-400 mb-4">Create your first domain to get started</p>
+          <p className="text-muted-foreground mb-4">Create your first domain to get started</p>
           <button
             type="button"
             onClick={() => handleAddNew('domain')}
@@ -340,14 +340,14 @@ export default function SpacesPage(): JSX.Element {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-xl font-semibold text-white">Projects</h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-muted-foreground text-sm">
             Projects in {selectedDomain?.name}
           </p>
         </div>
         <button
           type="button"
           onClick={() => handleAddNew('project')}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-symtex-card border border-symtex-border text-slate-300 hover:text-white hover:border-slate-500 transition-all text-sm"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border text-slate-300 hover:text-white hover:border-border transition-all text-sm"
         >
           <Plus className="w-4 h-4" aria-hidden="true" />
           New Project
@@ -366,10 +366,10 @@ export default function SpacesPage(): JSX.Element {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center min-h-[200px] bg-symtex-card rounded-xl border border-symtex-border">
-          <FolderKanban className="w-10 h-10 text-slate-600 mb-3" aria-hidden="true" />
+        <div className="flex flex-col items-center justify-center min-h-[200px] bg-card rounded-xl border border-border">
+          <FolderKanban className="w-10 h-10 text-muted-foreground mb-3" aria-hidden="true" />
           <h3 className="font-semibold text-white mb-2">No Projects Yet</h3>
-          <p className="text-slate-400 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Create your first project in this domain
           </p>
           <button
@@ -391,14 +391,14 @@ export default function SpacesPage(): JSX.Element {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-xl font-semibold text-white">Missions</h2>
-          <p className="text-slate-400 text-sm">
+          <p className="text-muted-foreground text-sm">
             Missions in {selectedProject?.name}
           </p>
         </div>
         <button
           type="button"
           onClick={() => handleAddNew('mission')}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-symtex-card border border-symtex-border text-slate-300 hover:text-white hover:border-slate-500 transition-all text-sm"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border text-slate-300 hover:text-white hover:border-border transition-all text-sm"
         >
           <Plus className="w-4 h-4" aria-hidden="true" />
           New Mission
@@ -412,7 +412,7 @@ export default function SpacesPage(): JSX.Element {
               key={mission.id}
               className={clsx(
                 'flex items-center justify-between p-4 rounded-lg',
-                'bg-symtex-card border border-symtex-border',
+                'bg-card border border-border',
                 'hover:border-slate-600 transition-all cursor-pointer'
               )}
               onClick={() => handleMissionSelect(mission.id, mission.name)}
@@ -431,20 +431,20 @@ export default function SpacesPage(): JSX.Element {
                 </div>
                 <div>
                   <h4 className="font-medium text-white">{mission.name}</h4>
-                  <span className="text-xs text-slate-500 capitalize">
+                  <span className="text-xs text-muted-foreground capitalize">
                     {mission.status}
                   </span>
                 </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-slate-500" aria-hidden="true" />
+              <ChevronRight className="w-5 h-5 text-muted-foreground" aria-hidden="true" />
             </div>
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center min-h-[200px] bg-symtex-card rounded-xl border border-symtex-border">
-          <Target className="w-10 h-10 text-slate-600 mb-3" aria-hidden="true" />
+        <div className="flex flex-col items-center justify-center min-h-[200px] bg-card rounded-xl border border-border">
+          <Target className="w-10 h-10 text-muted-foreground mb-3" aria-hidden="true" />
           <h3 className="font-semibold text-white mb-2">No Missions Yet</h3>
-          <p className="text-slate-400 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             Create your first mission in this project
           </p>
           <button
@@ -469,7 +469,7 @@ export default function SpacesPage(): JSX.Element {
             <Layers className="w-8 h-8 text-symtex-primary" />
             Spaces
           </h1>
-          <p className="text-slate-400 mt-1">
+          <p className="text-muted-foreground mt-1">
             Organize your work into domains, projects, and missions
           </p>
         </div>
@@ -479,7 +479,7 @@ export default function SpacesPage(): JSX.Element {
           onClick={() => {
             info('Coming Soon', 'Space settings will be available in a future update.');
           }}
-          className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+          className="p-2 rounded-lg text-muted-foreground hover:text-white hover:bg-muted transition-colors"
           aria-label="Space settings"
         >
           <Settings className="w-5 h-5" aria-hidden="true" />

@@ -11,7 +11,7 @@
  * ======================================== */
 
 body {
-  @apply bg-symtex-dark text-white min-h-screen;
+  @apply bg-background text-foreground min-h-screen;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,12 +44,12 @@ body {
  * ======================================== */
 
 .focus-ring {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-symtex-primary focus-visible:ring-offset-2 focus-visible:ring-offset-symtex-dark;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 
 /* Skip link for keyboard users */
 .skip-link {
-  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-symtex-primary focus:text-white focus:rounded-lg;
+  @apply sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg;
 }
 
 /* ========================================
@@ -73,16 +73,16 @@ body {
  * ======================================== */
 
 .card {
-  @apply bg-symtex-card border border-symtex-border rounded-xl;
+  @apply bg-card border border-border rounded-xl;
 }
 
 .card-elevated {
-  @apply bg-symtex-card border border-symtex-border rounded-xl;
+  @apply bg-card border border-border rounded-xl;
   box-shadow: var(--elevation-2);
 }
 
 .card-interactive {
-  @apply bg-symtex-card border border-symtex-border rounded-xl transition-all duration-200;
+  @apply bg-card border border-border rounded-xl transition-all duration-200;
 }
 
 .card-interactive:hover {
@@ -197,7 +197,7 @@ body {
  * ======================================== */
 
 .skeleton {
-  @apply bg-symtex-card rounded;
+  @apply bg-card rounded;
   background: linear-gradient(
     90deg,
     var(--color-surface-card) 25%,

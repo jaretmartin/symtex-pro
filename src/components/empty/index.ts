@@ -1,6 +1,6 @@
 export {
   EmptyState,
-  EmptyWorkflows,
+  EmptyAutomations,
   EmptyMissions,
   EmptyTemplates,
   EmptySearch,

@@ -1,9 +1,19 @@
 /**
- * Cognate Store - State management for Cognates and SOPs
+ * Cognate Store - Unified state management for Cognates, SOPs, and executions
+ *
+ * This store consolidates Cognate management (formerly split between CognateStore
+ * and AgentStore). All "agent" functionality has been merged here using
+ * proper Symtex terminology.
+ *
+ * Terminology:
+ * - Cognate = AI assistant (NOT "agent")
+ * - Cognate Template = Blueprint for a Cognate type
+ * - Cognate Instance = Running instance of a Cognate
+ * - Cognate Execution = A single execution/action by a Cognate
  */
 
 import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 import type {
   Cognate,
   CognateStatus,
@@ -11,7 +21,14 @@ import type {
   SOPStatus,
   SOPPack,
   BootstrapConfig,
+  CognateTemplate,
+  CognateInstance,
+  CognateExecution,
+  CognateInstanceStatus,
 } from '@/types';
+
+// Re-export types with Cognate naming for external use
+export type { CognateTemplate, CognateInstance, CognateExecution, CognateInstanceStatus };
 
 interface SOPFilters {
   search: string;
@@ -20,26 +37,33 @@ interface SOPFilters {
 }
 
 interface CognateState {
-  // Data
+  // === Cognate Profile Data ===
   cognates: Cognate[];
   selectedCognate: Cognate | null;
   sops: SOP[];
   selectedSOP: SOP | null;
   packs: SOPPack[];
 
-  // Bootstrap state
+  // === Cognate Instance/Execution Data ===
+  templates: CognateTemplate[];
+  instances: Record<string, CognateInstance>;
+  executions: Record<string, CognateExecution>;
+  selectedTemplateId: string | null;
+  selectedInstanceId: string | null;
+
+  // === Bootstrap state ===
   bootstrapConfig: BootstrapConfig | null;
   bootstrapStep: number;
 
-  // Filters
+  // === Filters ===
   sopFilters: SOPFilters;
   viewMode: 'grid' | 'list';
 
-  // Loading states
+  // === Loading states ===
   isLoading: boolean;
   error: string | null;
 
-  // Cognate Actions
+  // === Cognate Profile Actions ===
   setCognates: (cognates: Cognate[]) => void;
   addCognate: (cognate: Cognate) => void;
   updateCognate: (id: string, updates: Partial<Cognate>) => void;
@@ -47,7 +71,7 @@ interface CognateState {
   selectCognate: (cognate: Cognate | null) => void;
   setCognateStatus: (id: string, status: CognateStatus) => void;
 
-  // SOP Actions
+  // === SOP Actions ===
   setSOPs: (sops: SOP[]) => void;
   addSOP: (sop: SOP) => void;
   updateSOP: (id: string, updates: Partial<SOP>) => void;
@@ -56,25 +80,49 @@ interface CognateState {
   toggleSOPStatus: (id: string) => void;
   duplicateSOP: (id: string) => void;
 
-  // Pack Actions
+  // === Pack Actions ===
   setPacks: (packs: SOPPack[]) => void;
   installPack: (packId: string) => void;
 
-  // Bootstrap Actions
+  // === Bootstrap Actions ===
   setBootstrapConfig: (config: Partial<BootstrapConfig>) => void;
   setBootstrapStep: (step: number) => void;
   resetBootstrap: () => void;
 
-  // Filter Actions
+  // === Filter Actions ===
   setSOPFilters: (filters: Partial<SOPFilters>) => void;
   resetSOPFilters: () => void;
   setViewMode: (mode: 'grid' | 'list') => void;
 
-  // Loading Actions
+  // === Template Actions (Cognate blueprints) ===
+  setTemplates: (templates: CognateTemplate[]) => void;
+  addTemplate: (template: CognateTemplate) => void;
+  updateTemplate: (id: string, updates: Partial<CognateTemplate>) => void;
+  removeTemplate: (id: string) => void;
+  selectTemplate: (id: string | null) => void;
+
+  // === Instance Actions (running Cognates) ===
+  createInstance: (instance: CognateInstance) => void;
+  updateInstance: (id: string, updates: Partial<CognateInstance>) => void;
+  deleteInstance: (id: string) => void;
+  selectInstance: (id: string | null) => void;
+
+  // === Execution Actions ===
+  startExecution: (execution: CognateExecution) => void;
+  completeExecution: (id: string, output?: string, error?: string) => void;
+  pauseCognate: (instanceId: string) => void;
+  resumeCognate: (instanceId: string) => void;
+  cancelExecution: (id: string) => void;
+  updateExecution: (id: string, updates: Partial<CognateExecution>) => void;
+
+  // === Loading Actions ===
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 
-  // Computed
+  // === Reset ===
+  reset: () => void;
+
+  // === Computed - SOPs ===
   getFilteredSOPs: () => SOP[];
   getSOPStats: () => {
     total: number;
@@ -84,6 +132,15 @@ interface CognateState {
     triggersCount: number;
   };
   getCognateSOPs: (cognateId: string) => SOP[];
+
+  // === Computed - Instances ===
+  getRunningCognates: () => CognateInstance[];
+  getCognatesByMission: (missionId: string) => CognateInstance[];
+  getCognatesByProject: (projectId: string) => CognateInstance[];
+  getInstances: () => CognateInstance[];
+  getExecutionsForInstance: (instanceId: string) => CognateExecution[];
+  getCurrentExecution: (instanceId: string) => CognateExecution | null;
+  getActiveTemplates: () => CognateTemplate[];
 }
 
 const defaultSOPFilters: SOPFilters = {
@@ -103,7 +160,7 @@ const defaultBootstrapConfig: BootstrapConfig = {
 const mockCognates: Cognate[] = [
   {
     id: 'cog-1',
-    name: 'Customer Support Agent',
+    name: 'Customer Support Cognate',
     description: 'Handles customer inquiries and support tickets',
     status: 'active',
     industry: 'Technology',
@@ -116,7 +173,7 @@ const mockCognates: Cognate[] = [
   },
   {
     id: 'cog-2',
-    name: 'Sales Assistant',
+    name: 'Sales Assistant Cognate',
     description: 'Assists with sales outreach and lead qualification',
     status: 'draft',
     industry: 'Technology',
@@ -164,7 +221,7 @@ const mockSOPs: SOP[] = [
     id: 'sop-2',
     cognateId: 'cog-1',
     name: 'Escalation Handler',
-    description: 'Handles escalation requests to human agents',
+    description: 'Handles escalation requests to human support',
     status: 'active',
     priority: 'critical',
     version: '2.0.1',
@@ -172,7 +229,7 @@ const mockSOPs: SOP[] = [
       {
         id: 'rule-2',
         name: 'Detect Escalation Request',
-        trigger: { type: 'message', config: { pattern: 'escalate|human|agent' } },
+        trigger: { type: 'message', config: { pattern: 'escalate|human|support' } },
         conditions: [
           { id: 'cond-2', field: 'sentiment', operator: 'less_than', value: '0.3' },
         ],
@@ -209,249 +266,673 @@ const mockSOPs: SOP[] = [
   },
 ];
 
+const initialState = {
+  // Cognate profile data
+  cognates: mockCognates,
+  selectedCognate: null as Cognate | null,
+  sops: mockSOPs,
+  selectedSOP: null as SOP | null,
+  packs: [] as SOPPack[],
+
+  // Instance/execution data
+  templates: [] as CognateTemplate[],
+  instances: {} as Record<string, CognateInstance>,
+  executions: {} as Record<string, CognateExecution>,
+  selectedTemplateId: null as string | null,
+  selectedInstanceId: null as string | null,
+
+  // Bootstrap
+  bootstrapConfig: null as BootstrapConfig | null,
+  bootstrapStep: 0,
+
+  // Filters
+  sopFilters: defaultSOPFilters,
+  viewMode: 'grid' as const,
+
+  // Loading
+  isLoading: false,
+  error: null as string | null,
+};
+
 export const useCognateStore = create<CognateState>()(
   devtools(
-    (set, get) => ({
-      // Initial state
-      cognates: mockCognates,
-      selectedCognate: null,
-      sops: mockSOPs,
-      selectedSOP: null,
-      packs: [],
-      bootstrapConfig: null,
-      bootstrapStep: 0,
-      sopFilters: defaultSOPFilters,
-      viewMode: 'grid',
-      isLoading: false,
-      error: null,
+    persist(
+      (set, get) => ({
+        // Initial state
+        ...initialState,
 
-      // Cognate actions
-      setCognates: (cognates) => {
-        set({ cognates, isLoading: false, error: null });
-      },
+        // ==========================================
+        // Cognate Profile Actions
+        // ==========================================
 
-      addCognate: (cognate) => {
-        set((state) => ({
-          cognates: [...state.cognates, cognate],
-        }));
-      },
+        setCognates: (cognates) => {
+          set({ cognates, isLoading: false, error: null });
+        },
 
-      updateCognate: (id, updates) => {
-        set((state) => ({
-          cognates: state.cognates.map((c) =>
-            c.id === id ? { ...c, ...updates, updatedAt: new Date().toISOString() } : c
-          ),
-        }));
-      },
+        addCognate: (cognate) => {
+          set((state) => ({
+            cognates: [...state.cognates, cognate],
+          }));
+        },
 
-      removeCognate: (id) => {
-        set((state) => ({
-          cognates: state.cognates.filter((c) => c.id !== id),
-          selectedCognate: state.selectedCognate?.id === id ? null : state.selectedCognate,
-          sops: state.sops.filter((s) => s.cognateId !== id),
-        }));
-      },
+        updateCognate: (id, updates) => {
+          set((state) => ({
+            cognates: state.cognates.map((c) =>
+              c.id === id ? { ...c, ...updates, updatedAt: new Date().toISOString() } : c
+            ),
+          }));
+        },
 
-      selectCognate: (cognate) => {
-        set({ selectedCognate: cognate });
-      },
+        removeCognate: (id) => {
+          set((state) => ({
+            cognates: state.cognates.filter((c) => c.id !== id),
+            selectedCognate: state.selectedCognate?.id === id ? null : state.selectedCognate,
+            sops: state.sops.filter((s) => s.cognateId !== id),
+          }));
+        },
 
-      setCognateStatus: (id, status) => {
-        set((state) => ({
-          cognates: state.cognates.map((c) =>
-            c.id === id ? { ...c, status, updatedAt: new Date().toISOString() } : c
-          ),
-        }));
-      },
+        selectCognate: (cognate) => {
+          set({ selectedCognate: cognate });
+        },
 
-      // SOP actions
-      setSOPs: (sops) => {
-        set({ sops, isLoading: false, error: null });
-      },
+        setCognateStatus: (id, status) => {
+          set((state) => ({
+            cognates: state.cognates.map((c) =>
+              c.id === id ? { ...c, status, updatedAt: new Date().toISOString() } : c
+            ),
+          }));
+        },
 
-      addSOP: (sop) => {
-        set((state) => ({
-          sops: [...state.sops, sop],
-        }));
-      },
+        // ==========================================
+        // SOP Actions
+        // ==========================================
 
-      updateSOP: (id, updates) => {
-        set((state) => ({
-          sops: state.sops.map((s) =>
-            s.id === id ? { ...s, ...updates, updatedAt: new Date().toISOString() } : s
-          ),
-        }));
-      },
+        setSOPs: (sops) => {
+          set({ sops, isLoading: false, error: null });
+        },
 
-      removeSOP: (id) => {
-        set((state) => ({
-          sops: state.sops.filter((s) => s.id !== id),
-          selectedSOP: state.selectedSOP?.id === id ? null : state.selectedSOP,
-        }));
-      },
+        addSOP: (sop) => {
+          set((state) => ({
+            sops: [...state.sops, sop],
+          }));
+        },
 
-      selectSOP: (sop) => {
-        set({ selectedSOP: sop });
-      },
+        updateSOP: (id, updates) => {
+          set((state) => ({
+            sops: state.sops.map((s) =>
+              s.id === id ? { ...s, ...updates, updatedAt: new Date().toISOString() } : s
+            ),
+          }));
+        },
 
-      toggleSOPStatus: (id) => {
-        set((state) => ({
-          sops: state.sops.map((s) =>
-            s.id === id
-              ? {
-                  ...s,
-                  status: s.status === 'active' ? 'draft' : 'active',
+        removeSOP: (id) => {
+          set((state) => ({
+            sops: state.sops.filter((s) => s.id !== id),
+            selectedSOP: state.selectedSOP?.id === id ? null : state.selectedSOP,
+          }));
+        },
+
+        selectSOP: (sop) => {
+          set({ selectedSOP: sop });
+        },
+
+        toggleSOPStatus: (id) => {
+          set((state) => ({
+            sops: state.sops.map((s) =>
+              s.id === id
+                ? {
+                    ...s,
+                    status: s.status === 'active' ? 'draft' : 'active',
+                    updatedAt: new Date().toISOString(),
+                  }
+                : s
+            ),
+          }));
+        },
+
+        duplicateSOP: (id) => {
+          const state = get();
+          const originalSOP = state.sops.find((s) => s.id === id);
+          if (!originalSOP) return;
+
+          const newSOP: SOP = {
+            ...originalSOP,
+            id: `sop-${Date.now()}`,
+            name: `${originalSOP.name} (Copy)`,
+            status: 'draft',
+            version: '0.1.0',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            triggerCount: 0,
+            lastTriggeredAt: undefined,
+          };
+
+          set((state) => ({
+            sops: [...state.sops, newSOP],
+          }));
+        },
+
+        // ==========================================
+        // Pack Actions
+        // ==========================================
+
+        setPacks: (packs) => {
+          set({ packs });
+        },
+
+        installPack: (packId) => {
+          const state = get();
+          const pack = state.packs.find((p) => p.id === packId);
+          if (!pack || !pack.preview) return;
+
+          const newSOPs = pack.preview.map((sop) => ({
+            ...sop,
+            id: `sop-${Date.now()}-${Math.random().toString(36).substring(7)}`,
+            cognateId: state.selectedCognate?.id || '',
+            status: 'draft' as SOPStatus,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            triggerCount: 0,
+          }));
+
+          set((state) => ({
+            sops: [...state.sops, ...newSOPs],
+          }));
+        },
+
+        // ==========================================
+        // Bootstrap Actions
+        // ==========================================
+
+        setBootstrapConfig: (config) => {
+          set((state) => ({
+            bootstrapConfig: state.bootstrapConfig
+              ? { ...state.bootstrapConfig, ...config }
+              : { ...defaultBootstrapConfig, ...config },
+          }));
+        },
+
+        setBootstrapStep: (step) => {
+          set({ bootstrapStep: step });
+        },
+
+        resetBootstrap: () => {
+          set({
+            bootstrapConfig: null,
+            bootstrapStep: 0,
+          });
+        },
+
+        // ==========================================
+        // Filter Actions
+        // ==========================================
+
+        setSOPFilters: (filters) => {
+          set((state) => ({
+            sopFilters: { ...state.sopFilters, ...filters },
+          }));
+        },
+
+        resetSOPFilters: () => {
+          set({ sopFilters: defaultSOPFilters });
+        },
+
+        setViewMode: (viewMode) => {
+          set({ viewMode });
+        },
+
+        // ==========================================
+        // Template Actions (Cognate blueprints)
+        // ==========================================
+
+        setTemplates: (templates) => {
+          set({ templates });
+        },
+
+        addTemplate: (template) => {
+          set((state) => ({
+            templates: [...state.templates, template],
+          }));
+        },
+
+        updateTemplate: (id, updates) => {
+          set((state) => ({
+            templates: state.templates.map((t) =>
+              t.id === id
+                ? { ...t, ...updates, updatedAt: new Date().toISOString() }
+                : t
+            ),
+          }));
+        },
+
+        removeTemplate: (id) => {
+          set((state) => ({
+            templates: state.templates.filter((t) => t.id !== id),
+            selectedTemplateId:
+              state.selectedTemplateId === id ? null : state.selectedTemplateId,
+          }));
+        },
+
+        selectTemplate: (id) => {
+          set({ selectedTemplateId: id });
+        },
+
+        // ==========================================
+        // Instance Actions (running Cognates)
+        // ==========================================
+
+        createInstance: (instance) => {
+          set((state) => ({
+            instances: {
+              ...state.instances,
+              [instance.id]: instance,
+            },
+          }));
+
+          // Update template instance count if the template tracks it
+          const template = get().templates.find((t) => t.id === instance.templateId);
+          if (template && template.instanceCount !== undefined) {
+            get().updateTemplate(template.id, {
+              instanceCount: (template.instanceCount ?? 0) + 1,
+            });
+          }
+        },
+
+        updateInstance: (id, updates) => {
+          set((state) => {
+            const existing = state.instances[id];
+            if (!existing) return state;
+
+            return {
+              instances: {
+                ...state.instances,
+                [id]: {
+                  ...existing,
+                  ...updates,
                   updatedAt: new Date().toISOString(),
+                },
+              },
+            };
+          });
+        },
+
+        deleteInstance: (id) => {
+          set((state) => {
+            const instance = state.instances[id];
+            if (!instance) return state;
+
+            // Remove instance
+            const newInstances = { ...state.instances };
+            delete newInstances[id];
+
+            // Remove associated executions
+            const newExecutions = { ...state.executions };
+            Object.values(state.executions)
+              .filter((e) => e.instanceId === id)
+              .forEach((e) => delete newExecutions[e.id]);
+
+            return {
+              instances: newInstances,
+              executions: newExecutions,
+              selectedInstanceId:
+                state.selectedInstanceId === id ? null : state.selectedInstanceId,
+            };
+          });
+        },
+
+        selectInstance: (id) => {
+          set({ selectedInstanceId: id });
+        },
+
+        // ==========================================
+        // Execution Actions
+        // ==========================================
+
+        startExecution: (execution) => {
+          set((state) => {
+            // Update instance status and stats
+            const instance = state.instances[execution.instanceId];
+            const newInstances = instance
+              ? {
+                  ...state.instances,
+                  [execution.instanceId]: {
+                    ...instance,
+                    status: 'busy' as CognateInstanceStatus,
+                    totalExecutions: (instance.totalExecutions ?? 0) + 1,
+                    lastActiveAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                  },
                 }
-              : s
-          ),
-        }));
-      },
+              : state.instances;
 
-      duplicateSOP: (id) => {
-        const state = get();
-        const originalSOP = state.sops.find((s) => s.id === id);
-        if (!originalSOP) return;
+            return {
+              executions: {
+                ...state.executions,
+                [execution.id]: execution,
+              },
+              instances: newInstances,
+            };
+          });
+        },
 
-        const newSOP: SOP = {
-          ...originalSOP,
-          id: `sop-${Date.now()}`,
-          name: `${originalSOP.name} (Copy)`,
-          status: 'draft',
-          version: '0.1.0',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          triggerCount: 0,
-          lastTriggeredAt: undefined,
-        };
+        completeExecution: (id, output, error) => {
+          set((state) => {
+            const execution = state.executions[id];
+            if (!execution) return state;
 
-        set((state) => ({
-          sops: [...state.sops, newSOP],
-        }));
-      },
+            const now = new Date().toISOString();
+            const startTime = new Date(execution.startedAt).getTime();
+            const duration = Date.now() - startTime;
 
-      // Pack actions
-      setPacks: (packs) => {
-        set({ packs });
-      },
+            const isSuccess = !error;
+            const newStatus = error ? 'failed' : 'completed';
 
-      installPack: (packId) => {
-        const state = get();
-        const pack = state.packs.find((p) => p.id === packId);
-        if (!pack || !pack.preview) return;
+            // Update execution
+            const newExecutions = {
+              ...state.executions,
+              [id]: {
+                ...execution,
+                status: newStatus as CognateExecution['status'],
+                output: output ?? execution.output,
+                error: error ?? execution.error,
+                completedAt: now,
+                duration,
+              },
+            };
 
-        const newSOPs = pack.preview.map((sop) => ({
-          ...sop,
-          id: `sop-${Date.now()}-${Math.random().toString(36).substring(7)}`,
-          cognateId: state.selectedCognate?.id || '',
-          status: 'draft' as SOPStatus,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          triggerCount: 0,
-        }));
+            // Update instance
+            const instance = state.instances[execution.instanceId];
+            const newInstances = instance
+              ? {
+                  ...state.instances,
+                  [execution.instanceId]: {
+                    ...instance,
+                    status: 'idle' as CognateInstanceStatus,
+                    successfulExecutions: isSuccess
+                      ? (instance.successfulExecutions ?? 0) + 1
+                      : (instance.successfulExecutions ?? 0),
+                    lastActiveAt: now,
+                    updatedAt: now,
+                  },
+                }
+              : state.instances;
 
-        set((state) => ({
-          sops: [...state.sops, ...newSOPs],
-        }));
-      },
+            return {
+              executions: newExecutions,
+              instances: newInstances,
+            };
+          });
+        },
 
-      // Bootstrap actions
-      setBootstrapConfig: (config) => {
-        set((state) => ({
-          bootstrapConfig: state.bootstrapConfig
-            ? { ...state.bootstrapConfig, ...config }
-            : { ...defaultBootstrapConfig, ...config },
-        }));
-      },
+        pauseCognate: (instanceId) => {
+          set((state) => {
+            const instance = state.instances[instanceId];
+            if (!instance) return state;
 
-      setBootstrapStep: (step) => {
-        set({ bootstrapStep: step });
-      },
+            // Find running execution for this instance
+            const runningExecution = Object.values(state.executions).find(
+              (e) => e.instanceId === instanceId && e.status === 'running'
+            );
 
-      resetBootstrap: () => {
-        set({
-          bootstrapConfig: null,
-          bootstrapStep: 0,
-        });
-      },
+            const newExecutions = runningExecution
+              ? {
+                  ...state.executions,
+                  [runningExecution.id]: {
+                    ...runningExecution,
+                    status: 'paused' as const,
+                  },
+                }
+              : state.executions;
 
-      // Filter actions
-      setSOPFilters: (filters) => {
-        set((state) => ({
-          sopFilters: { ...state.sopFilters, ...filters },
-        }));
-      },
+            return {
+              instances: {
+                ...state.instances,
+                [instanceId]: {
+                  ...instance,
+                  status: 'paused' as CognateInstanceStatus,
+                  updatedAt: new Date().toISOString(),
+                },
+              },
+              executions: newExecutions,
+            };
+          });
+        },
 
-      resetSOPFilters: () => {
-        set({ sopFilters: defaultSOPFilters });
-      },
+        resumeCognate: (instanceId) => {
+          set((state) => {
+            const instance = state.instances[instanceId];
+            if (!instance || instance.status !== 'paused') return state;
 
-      setViewMode: (viewMode) => {
-        set({ viewMode });
-      },
+            // Find paused execution for this instance
+            const pausedExecution = Object.values(state.executions).find(
+              (e) => e.instanceId === instanceId && e.status === 'paused'
+            );
 
-      // Loading actions
-      setLoading: (isLoading) => {
-        set({ isLoading });
-      },
+            const newExecutions = pausedExecution
+              ? {
+                  ...state.executions,
+                  [pausedExecution.id]: {
+                    ...pausedExecution,
+                    status: 'running' as const,
+                  },
+                }
+              : state.executions;
 
-      setError: (error) => {
-        set({ error, isLoading: false });
-      },
+            const newStatus: CognateInstanceStatus = pausedExecution ? 'busy' : 'idle';
 
-      // Computed
-      getFilteredSOPs: () => {
-        const { sops, sopFilters, selectedCognate } = get();
-        const cognateSOPs = selectedCognate
-          ? sops.filter((s) => s.cognateId === selectedCognate.id)
-          : sops;
+            return {
+              instances: {
+                ...state.instances,
+                [instanceId]: {
+                  ...instance,
+                  status: newStatus,
+                  updatedAt: new Date().toISOString(),
+                },
+              },
+              executions: newExecutions,
+            };
+          });
+        },
 
-        return cognateSOPs.filter((sop) => {
-          // Search filter
-          if (sopFilters.search) {
-            const searchLower = sopFilters.search.toLowerCase();
-            const matchesSearch =
-              sop.name.toLowerCase().includes(searchLower) ||
-              sop.description.toLowerCase().includes(searchLower) ||
-              sop.tags.some((tag) => tag.toLowerCase().includes(searchLower));
-            if (!matchesSearch) return false;
-          }
+        cancelExecution: (id) => {
+          set((state) => {
+            const execution = state.executions[id];
+            if (!execution) return state;
 
-          // Status filter
-          if (sopFilters.statuses.length > 0) {
-            if (!sopFilters.statuses.includes(sop.status)) return false;
-          }
+            const now = new Date().toISOString();
 
-          // Tag filter
-          if (sopFilters.tags.length > 0) {
-            const hasMatchingTag = sopFilters.tags.some((tag) => sop.tags.includes(tag));
-            if (!hasMatchingTag) return false;
-          }
+            // Update execution
+            const newExecutions = {
+              ...state.executions,
+              [id]: {
+                ...execution,
+                status: 'cancelled' as const,
+                completedAt: now,
+              },
+            };
 
-          return true;
-        });
-      },
+            // Update instance
+            const instance = state.instances[execution.instanceId];
+            const newInstances = instance
+              ? {
+                  ...state.instances,
+                  [execution.instanceId]: {
+                    ...instance,
+                    status: 'idle' as CognateInstanceStatus,
+                    lastActiveAt: now,
+                    updatedAt: now,
+                  },
+                }
+              : state.instances;
 
-      getSOPStats: () => {
-        const { sops, selectedCognate } = get();
-        const cognateSOPs = selectedCognate
-          ? sops.filter((s) => s.cognateId === selectedCognate.id)
-          : sops;
+            return {
+              executions: newExecutions,
+              instances: newInstances,
+            };
+          });
+        },
 
-        return {
-          total: cognateSOPs.length,
-          active: cognateSOPs.filter((s) => s.status === 'active').length,
-          draft: cognateSOPs.filter((s) => s.status === 'draft').length,
-          rulesCount: cognateSOPs.reduce((acc, s) => acc + s.rules.length, 0),
-          triggersCount: cognateSOPs.reduce((acc, s) => acc + s.triggerCount, 0),
-        };
-      },
+        updateExecution: (id, updates) => {
+          set((state) => {
+            const existing = state.executions[id];
+            if (!existing) return state;
 
-      getCognateSOPs: (cognateId) => {
-        const { sops } = get();
-        return sops.filter((s) => s.cognateId === cognateId);
-      },
-    }),
+            return {
+              executions: {
+                ...state.executions,
+                [id]: { ...existing, ...updates },
+              },
+            };
+          });
+        },
+
+        // ==========================================
+        // Loading Actions
+        // ==========================================
+
+        setLoading: (isLoading) => {
+          set({ isLoading });
+        },
+
+        setError: (error) => {
+          set({ error, isLoading: false });
+        },
+
+        // ==========================================
+        // Reset
+        // ==========================================
+
+        reset: () => {
+          set(initialState);
+        },
+
+        // ==========================================
+        // Computed - SOPs
+        // ==========================================
+
+        getFilteredSOPs: () => {
+          const { sops, sopFilters, selectedCognate } = get();
+          const cognateSOPs = selectedCognate
+            ? sops.filter((s) => s.cognateId === selectedCognate.id)
+            : sops;
+
+          return cognateSOPs.filter((sop) => {
+            // Search filter
+            if (sopFilters.search) {
+              const searchLower = sopFilters.search.toLowerCase();
+              const matchesSearch =
+                sop.name.toLowerCase().includes(searchLower) ||
+                sop.description.toLowerCase().includes(searchLower) ||
+                sop.tags.some((tag) => tag.toLowerCase().includes(searchLower));
+              if (!matchesSearch) return false;
+            }
+
+            // Status filter
+            if (sopFilters.statuses.length > 0) {
+              if (!sopFilters.statuses.includes(sop.status)) return false;
+            }
+
+            // Tag filter
+            if (sopFilters.tags.length > 0) {
+              const hasMatchingTag = sopFilters.tags.some((tag) => sop.tags.includes(tag));
+              if (!hasMatchingTag) return false;
+            }
+
+            return true;
+          });
+        },
+
+        getSOPStats: () => {
+          const { sops, selectedCognate } = get();
+          const cognateSOPs = selectedCognate
+            ? sops.filter((s) => s.cognateId === selectedCognate.id)
+            : sops;
+
+          return {
+            total: cognateSOPs.length,
+            active: cognateSOPs.filter((s) => s.status === 'active').length,
+            draft: cognateSOPs.filter((s) => s.status === 'draft').length,
+            rulesCount: cognateSOPs.reduce((acc, s) => acc + s.rules.length, 0),
+            triggersCount: cognateSOPs.reduce((acc, s) => acc + s.triggerCount, 0),
+          };
+        },
+
+        getCognateSOPs: (cognateId) => {
+          const { sops } = get();
+          return sops.filter((s) => s.cognateId === cognateId);
+        },
+
+        // ==========================================
+        // Computed - Instances
+        // ==========================================
+
+        getRunningCognates: () => {
+          const { instances, executions } = get();
+          const runningExecutionInstanceIds = new Set(
+            Object.values(executions)
+              .filter((e) => e.status === 'running')
+              .map((e) => e.instanceId)
+          );
+
+          return Object.values(instances).filter((instance) =>
+            runningExecutionInstanceIds.has(instance.id)
+          );
+        },
+
+        getCognatesByMission: (missionId) => {
+          const { instances } = get();
+          return Object.values(instances).filter((i) => i.missionId === missionId);
+        },
+
+        getCognatesByProject: (projectId) => {
+          const { instances } = get();
+          return Object.values(instances).filter((i) => i.projectId === projectId);
+        },
+
+        getInstances: () => {
+          const { instances } = get();
+          return Object.values(instances);
+        },
+
+        getExecutionsForInstance: (instanceId) => {
+          const { executions } = get();
+          return Object.values(executions)
+            .filter((e) => e.instanceId === instanceId)
+            .sort(
+              (a, b) =>
+                new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()
+            );
+        },
+
+        getCurrentExecution: (instanceId) => {
+          const { executions } = get();
+          const instanceExecutions = Object.values(executions)
+            .filter((e) => e.instanceId === instanceId)
+            .sort(
+              (a, b) =>
+                new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime()
+            );
+
+          return instanceExecutions[0] ?? null;
+        },
+
+        getActiveTemplates: () => {
+          const { templates } = get();
+          return templates.filter((t) => t.status === 'active');
+        },
+      }),
+      {
+        name: 'symtex-cognate-store',
+        partialize: (state) => ({
+          cognates: state.cognates,
+          sops: state.sops,
+          templates: state.templates,
+          instances: state.instances,
+          sopFilters: state.sopFilters,
+          viewMode: state.viewMode,
+        }),
+      }
+    ),
     { name: 'CognateStore' }
   )
 );

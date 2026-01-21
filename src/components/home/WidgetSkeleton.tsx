@@ -31,27 +31,27 @@ export default function WidgetSkeleton({
   return (
     <div
       className={clsx(
-        'bg-symtex-card rounded-xl border border-symtex-border overflow-hidden animate-pulse',
+        'bg-card rounded-xl border border-border overflow-hidden animate-pulse',
         className
       )}
       style={{ minHeight: heightStyle }}
     >
       {/* Header Skeleton */}
       {showHeader && (
-        <div className="p-5 border-b border-symtex-border">
+        <div className="p-5 border-b border-border">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {/* Icon placeholder */}
-              <div className="w-10 h-10 bg-slate-700 rounded-lg" />
+              <div className="w-10 h-10 bg-surface-elevated rounded-lg" />
               <div className="space-y-2">
                 {/* Title */}
-                <div className="h-5 w-32 bg-slate-700 rounded" />
+                <div className="h-5 w-32 bg-surface-elevated rounded" />
                 {/* Subtitle */}
-                <div className="h-3 w-48 bg-slate-700/60 rounded" />
+                <div className="h-3 w-48 bg-surface-elevated/60 rounded" />
               </div>
             </div>
             {/* Action button placeholder */}
-            <div className="h-8 w-20 bg-slate-700/60 rounded-lg" />
+            <div className="h-8 w-20 bg-surface-elevated/60 rounded-lg" />
           </div>
         </div>
       )}
@@ -61,21 +61,21 @@ export default function WidgetSkeleton({
         {Array.from({ length: rows }).map((_, index) => (
           <div key={index} className="flex items-center gap-4">
             {/* Icon/avatar placeholder */}
-            <div className="w-8 h-8 bg-slate-700 rounded-lg flex-shrink-0" />
+            <div className="w-8 h-8 bg-surface-elevated rounded-lg flex-shrink-0" />
             <div className="flex-1 space-y-2">
               {/* Primary text */}
               <div
-                className="h-4 bg-slate-700 rounded"
+                className="h-4 bg-surface-elevated rounded"
                 style={{ width: `${Math.random() * 30 + 60}%` }}
               />
               {/* Secondary text */}
               <div
-                className="h-3 bg-slate-700/60 rounded"
+                className="h-3 bg-surface-elevated/60 rounded"
                 style={{ width: `${Math.random() * 20 + 40}%` }}
               />
             </div>
             {/* Action/value placeholder */}
-            <div className="w-12 h-6 bg-slate-700/60 rounded flex-shrink-0" />
+            <div className="w-12 h-6 bg-surface-elevated/60 rounded flex-shrink-0" />
           </div>
         ))}
       </div>
@@ -101,7 +101,7 @@ export function SkeletonText({
 
   return (
     <div
-      className={clsx('bg-slate-700 rounded animate-pulse', className)}
+      className={clsx('bg-surface-elevated rounded animate-pulse', className)}
       style={{ width: widthStyle, height: `${height}px` }}
     />
   )
@@ -121,7 +121,7 @@ export function SkeletonCircle({
 }: SkeletonCircleProps): JSX.Element {
   return (
     <div
-      className={clsx('bg-slate-700 rounded-full animate-pulse', className)}
+      className={clsx('bg-surface-elevated rounded-full animate-pulse', className)}
       style={{ width: `${size}px`, height: `${size}px` }}
     />
   )
@@ -146,7 +146,7 @@ export function SkeletonBox({
 
   return (
     <div
-      className={clsx('bg-slate-700 rounded-lg animate-pulse', className)}
+      className={clsx('bg-surface-elevated rounded-lg animate-pulse', className)}
       style={{ width: widthStyle, height: heightStyle }}
     />
   )

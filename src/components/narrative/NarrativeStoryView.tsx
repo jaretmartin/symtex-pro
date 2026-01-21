@@ -305,7 +305,7 @@ export function NarrativeStoryView({
             <h4 className="text-lg font-medium text-white mb-2">No chapters yet</h4>
             <p className="text-sm text-slate-400 max-w-md mx-auto">
               Start building your story by adding chapters. Each chapter represents a step in
-              your automation workflow with narrative context.
+              your Automation with narrative context.
             </p>
           </div>
         )}

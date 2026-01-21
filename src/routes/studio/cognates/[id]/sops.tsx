@@ -58,8 +58,8 @@ export function CognateSOPsPage(): JSX.Element {
   if (!cognate) {
     return (
       <div className="p-6 text-center">
-        <h2 className="text-xl font-medium text-white mb-2">Cognate Not Found</h2>
-        <p className="text-zinc-400 mb-4">The requested cognate does not exist.</p>
+        <h2 className="text-xl font-medium text-foreground mb-2">Cognate Not Found</h2>
+        <p className="text-muted-foreground mb-4">The requested cognate does not exist.</p>
         <Link
           to="/studio/cognates"
           className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300"

@@ -28,9 +28,9 @@ export function Skeleton({
   };
 
   const animationClasses = {
-    pulse: 'animate-pulse bg-symtex-card',
+    pulse: 'animate-pulse bg-card',
     shimmer: 'skeleton',
-    none: 'bg-symtex-card',
+    none: 'bg-card',
   };
 
   return (
@@ -76,7 +76,7 @@ export function SkeletonCard({ className }: { className?: string }): JSX.Element
   return (
     <div
       className={clsx(
-        'p-5 bg-symtex-card border border-symtex-border rounded-xl',
+        'p-5 bg-card border border-border rounded-xl',
         className
       )}
     >
@@ -105,7 +105,7 @@ export function SkeletonMissionCard({ className }: { className?: string }): JSX.
   return (
     <div
       className={clsx(
-        'p-5 bg-symtex-card border border-symtex-border rounded-xl border-l-4 border-l-slate-600',
+        'p-5 bg-card border border-border rounded-xl border-l-4 border-l-border',
         className
       )}
     >
@@ -141,7 +141,7 @@ export function SkeletonStat({ className }: { className?: string }): JSX.Element
   return (
     <div
       className={clsx(
-        'p-4 bg-symtex-card border border-symtex-border rounded-xl',
+        'p-4 bg-card border border-border rounded-xl',
         className
       )}
     >
@@ -168,7 +168,7 @@ export function SkeletonTable({
   return (
     <div className={clsx('space-y-2', className)}>
       {/* Header */}
-      <div className="flex items-center gap-4 p-3 bg-symtex-elevated rounded-lg">
+      <div className="flex items-center gap-4 p-3 bg-surface-elevated rounded-lg">
         {Array.from({ length: columns }).map((_, i) => (
           <Skeleton key={i} height={14} width={`${100 / columns}%`} />
         ))}
@@ -178,7 +178,7 @@ export function SkeletonTable({
       {Array.from({ length: rows }).map((_, rowIndex) => (
         <div
           key={rowIndex}
-          className="flex items-center gap-4 p-3 bg-symtex-card border border-symtex-border rounded-lg"
+          className="flex items-center gap-4 p-3 bg-card border border-border rounded-lg"
         >
           {Array.from({ length: columns }).map((_, colIndex) => (
             <Skeleton

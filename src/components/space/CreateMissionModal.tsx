@@ -420,7 +420,7 @@ export function CreateMissionModal({
               <Bot className="w-5 h-5 text-zinc-400" />
               <div>
                 <p className="text-sm font-medium text-zinc-300">Assign a Cognate</p>
-                <p className="text-xs text-zinc-500">Optionally assign an AI agent to this mission</p>
+                <p className="text-xs text-zinc-500">Optionally assign a Cognate to this mission</p>
               </div>
             </div>
             <div className="relative">

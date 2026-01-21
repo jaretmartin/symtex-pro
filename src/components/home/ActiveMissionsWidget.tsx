@@ -154,7 +154,7 @@ export default function ActiveMissionsWidget({
     if (days < 0) return 'text-red-400'
     if (days <= 3) return 'text-orange-400'
     if (days <= 7) return 'text-yellow-400'
-    return 'text-slate-400'
+    return 'text-muted-foreground'
   }
 
   // Show loading skeleton
@@ -166,7 +166,7 @@ export default function ActiveMissionsWidget({
   if (activeMissions.length === 0) {
     return (
       <div className={clsx(
-        'bg-symtex-card rounded-xl border border-symtex-border overflow-hidden',
+        'bg-card rounded-xl border border-border overflow-hidden',
         className
       )}>
         <div className="p-5 border-b border-symtex-border">

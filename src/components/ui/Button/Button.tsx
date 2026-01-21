@@ -28,16 +28,16 @@ const buttonVariants = cva(
           'focus-visible:ring-symtex-primary',
         ],
         secondary: [
-          'bg-symtex-card border border-symtex-border',
-          'text-slate-300',
-          'hover:text-white hover:border-slate-500 hover:bg-symtex-elevated',
-          'focus-visible:ring-slate-500',
+          'bg-card border border-border',
+          'text-foreground',
+          'hover:text-foreground hover:border-border hover:bg-surface-elevated',
+          'focus-visible:ring-ring',
         ],
         ghost: [
           'bg-transparent',
-          'text-slate-400',
-          'hover:text-white hover:bg-slate-800/50',
-          'focus-visible:ring-slate-500',
+          'text-muted-foreground',
+          'hover:text-foreground hover:bg-muted/50',
+          'focus-visible:ring-ring',
         ],
         outline: [
           'bg-transparent border-2 border-symtex-primary',

@@ -109,8 +109,8 @@ const nodeCategories: { title: string; nodes: PaletteNode[] }[] = [
       },
       {
         type: 'action',
-        label: 'Create Task',
-        description: 'Create a new task',
+        label: 'Create Action',
+        description: 'Create a new Action',
         icon: 'check-square',
         emoji: '✅',
         color: '#6366f1',
@@ -182,7 +182,7 @@ export default function NodePalette(_props: NodePaletteProps) {
           marginBottom: '20px',
         }}
       >
-        Drag nodes to the canvas to build your workflow
+        Drag nodes to the canvas to build your Automation
       </p>
 
       {nodeCategories.map((category) => (

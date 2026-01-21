@@ -149,9 +149,9 @@ export function CognatesPage(): JSX.Element {
     return true;
   });
 
-  const handleEdit = (cognate: Cognate): void => {
-    // Navigate to edit page - for now just log
-    console.log('Edit cognate:', cognate.id);
+  const handleEdit = (_cognate: Cognate): void => {
+    // Navigate to edit page
+    // Edit cognate: _cognate.id
   };
 
   const handleDelete = (cognate: Cognate): void => {
@@ -166,7 +166,7 @@ export function CognatesPage(): JSX.Element {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Cognates</h1>
-          <p className="text-zinc-400 mt-1">Manage your AI agents and their behaviors</p>
+          <p className="text-zinc-400 mt-1">Manage your Cognates and their behaviors</p>
         </div>
 
         <Link

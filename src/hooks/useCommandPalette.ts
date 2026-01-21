@@ -86,7 +86,7 @@ const mockPages: CommandAction[] = [
   { id: 'page-home', title: 'Home', description: 'Dashboard overview', category: 'pages', path: '/' },
   { id: 'page-missions', title: 'Missions', description: 'Active and completed missions', category: 'pages', path: '/missions' },
   { id: 'page-cognates', title: 'Cognates', description: 'Manage AI workers', category: 'pages', path: '/studio/cognates' },
-  { id: 'page-narratives', title: 'Narratives', description: 'Story-driven workflows', category: 'pages', path: '/studio/narratives' },
+  { id: 'page-narratives', title: 'Narratives', description: 'Story-driven automations', category: 'pages', path: '/studio/narratives' },
   { id: 'page-automations', title: 'Automations', description: 'Automated processes', category: 'pages', path: '/studio/automations' },
   { id: 'page-sops', title: 'SOPs', description: 'Standard Operating Procedures', category: 'pages', path: '/studio/sops' },
   { id: 'page-knowledge', title: 'Knowledge Library', description: 'Documents and context', category: 'pages', path: '/library/knowledge' },
@@ -111,7 +111,7 @@ const mockGovernance: CommandAction[] = [
 
 const mockCognates: CommandAction[] = [
   { id: 'cognate-sales', title: 'Sales Assistant', description: 'L2 Drafter - Sales support', category: 'cognates', path: '/studio/cognates/cog-001', icon: '🤝' },
-  { id: 'cognate-support', title: 'Support Agent', description: 'L4 Chief of Staff - Customer support', category: 'cognates', path: '/studio/cognates/cog-002', icon: '💬' },
+  { id: 'cognate-support', title: 'Support Cognate', description: 'L4 Chief of Staff - Customer support', category: 'cognates', path: '/studio/cognates/cog-002', icon: '💬' },
   { id: 'cognate-analyst', title: 'Research Analyst', description: 'L1 Suggester - Data analysis', category: 'cognates', path: '/studio/cognates/cog-003', icon: '📊' },
 ];
 
@@ -346,7 +346,7 @@ export function useCommandPalette(): UseCommandPaletteReturn {
           break;
 
         case 'modal':
-          console.log('Open modal:', item.modalType);
+          // Open modal: item.modalType
           break;
 
         case 'navigate':

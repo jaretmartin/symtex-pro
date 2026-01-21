@@ -123,7 +123,7 @@ const automationTemplates: AutomationTemplate[] = [
   },
   {
     id: 'template-6',
-    name: 'Data Sync Workflow',
+    name: 'Data Sync Automation',
     description: 'Keep data synchronized across multiple systems',
     category: 'Operations',
     icon: '🔄',
@@ -216,7 +216,7 @@ export default function AutomationsPage() {
             Automations
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '14px' }}>
-            Manage your automated workflows and discover new templates
+            Manage your Automations and discover new templates
           </p>
         </div>
         <a

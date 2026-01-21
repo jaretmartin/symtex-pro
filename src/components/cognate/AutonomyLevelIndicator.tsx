@@ -93,7 +93,7 @@ export function AutonomyLevelIndicator({
 
       {/* Inline description (optional) */}
       {showDescription && (
-        <p className="text-xs text-slate-400 mt-1">{config.description}</p>
+        <p className="text-xs text-muted-foreground mt-1">{config.description}</p>
       )}
 
       {/* Tooltip */}
@@ -101,7 +101,7 @@ export function AutonomyLevelIndicator({
         <div
           className={clsx(
             'absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2',
-            'px-3 py-2 rounded-lg bg-slate-800 border border-slate-700',
+            'px-3 py-2 rounded-lg bg-surface-card border border-border',
             'shadow-xl whitespace-nowrap'
           )}
         >
@@ -109,11 +109,11 @@ export function AutonomyLevelIndicator({
             <Icon className="w-4 h-4 text-amber-400" />
             <span className="font-medium text-white">{config.name}</span>
           </div>
-          <p className="text-xs text-slate-400">{config.description}</p>
+          <p className="text-xs text-muted-foreground">{config.description}</p>
           <div
             className={clsx(
               'absolute top-full left-1/2 -translate-x-1/2',
-              'border-4 border-transparent border-t-slate-800'
+              'border-4 border-transparent border-t-surface-card'
             )}
           />
         </div>

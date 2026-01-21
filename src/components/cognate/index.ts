@@ -64,3 +64,7 @@ export { PersonalitySliders, PersonalityPreview } from './PersonalitySliders';
 export { CognateCard } from './CognateCard';
 export { CognateDetail } from './CognateDetail';
 export { CognateSelector, CognateMultiSelector } from './CognateSelector';
+
+// Radar personality component (8-trait version)
+export { default as PersonalityRadar, RADAR_TRAITS, PERSONALITY_PRESETS } from './PersonalityRadar';
+export type { RadarPersonalityTrait, RadarPersonalityValues, PersonalityPreset } from './PersonalityRadar';

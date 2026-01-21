@@ -18,6 +18,7 @@ import {
   Check,
 } from 'lucide-react';
 import clsx from 'clsx';
+import DOMPurify from 'dompurify';
 import type { ConflictingRule } from './types';
 
 // =============================================================================
@@ -102,13 +103,16 @@ function S1Highlight({ code, className }: S1HighlightProps): JSX.Element {
     return highlighted;
   };
 
+  // Sanitize the highlighted HTML to prevent XSS attacks
+  const sanitizedHtml = DOMPurify.sanitize(highlightCode(code));
+
   return (
     <pre
       className={clsx(
         'text-sm font-mono overflow-x-auto whitespace-pre text-zinc-300',
         className
       )}
-      dangerouslySetInnerHTML={{ __html: highlightCode(code) }}
+      dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
     />
   );
 }

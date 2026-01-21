@@ -59,11 +59,11 @@ export function CognateCard({
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
       className={clsx(
-        'p-5 bg-zinc-900/50 border rounded-lg transition-all',
-        onClick && 'cursor-pointer hover:border-zinc-600',
+        'p-5 bg-surface-base/50 border rounded-lg transition-all',
+        onClick && 'cursor-pointer hover:border-border',
         selected
           ? 'border-symtex-primary bg-symtex-primary/5'
-          : 'border-zinc-800',
+          : 'border-border',
         className
       )}
     >
@@ -84,7 +84,7 @@ export function CognateCard({
           )}
           <div>
             <h3 className="font-medium text-white">{cognate.name}</h3>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-muted-foreground">
               {cognate.role || 'No role assigned'}
             </p>
           </div>
@@ -96,7 +96,7 @@ export function CognateCard({
 
       {/* Description */}
       {cognate.description && (
-        <p className="text-sm text-zinc-400 line-clamp-2 mb-4">
+        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
           {cognate.description}
         </p>
       )}
@@ -119,11 +119,11 @@ export function CognateCard({
       )}
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
+      <div className="flex items-center justify-between pt-4 border-t border-border">
         <AutonomyBadge level={cognate.autonomyLevel} />
-        <div className="flex items-center gap-2 text-sm text-zinc-500">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <span>{cognate.tasksCompleted} tasks</span>
-          <span className="text-zinc-700">|</span>
+          <span className="text-border">|</span>
           <span>{Math.round(cognate.successRate)}% success</span>
         </div>
       </div>
@@ -158,12 +158,12 @@ function CompactCognateCard({
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
       className={clsx(
-        'p-3 bg-zinc-900/50 border rounded-lg transition-all',
+        'p-3 bg-surface-base/50 border rounded-lg transition-all',
         'flex items-center gap-3',
-        onClick && 'cursor-pointer hover:border-zinc-600',
+        onClick && 'cursor-pointer hover:border-border',
         selected
           ? 'border-symtex-primary bg-symtex-primary/5'
-          : 'border-zinc-800',
+          : 'border-border',
         className
       )}
     >
@@ -186,7 +186,7 @@ function CompactCognateCard({
           <h3 className="font-medium text-white truncate">{cognate.name}</h3>
           <StatusDot status={cognate.availability} />
         </div>
-        <p className="text-xs text-zinc-400 truncate">
+        <p className="text-xs text-muted-foreground truncate">
           {cognate.role || 'No role'}
         </p>
       </div>
@@ -216,7 +216,7 @@ function StatusIndicator({ status, className }: StatusIndicatorProps): JSX.Eleme
       className={clsx(
         'flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium',
         config.color,
-        'bg-slate-800/50',
+        'bg-surface-card/50',
         className
       )}
     >

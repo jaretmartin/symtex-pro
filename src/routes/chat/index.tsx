@@ -152,15 +152,15 @@ export default function ChatPage(): JSX.Element {
   return (
     <div className="h-[calc(100vh-8rem)] flex">
       {/* Conversation List Sidebar */}
-      <div className="w-64 bg-symtex-card border-r border-symtex-border flex flex-col">
+      <div className="w-64 bg-card border-r border-border flex flex-col">
         {/* Header */}
-        <div className="p-4 border-b border-symtex-border">
+        <div className="p-4 border-b border-border">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => navigate(-1)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg text-muted-foreground hover:text-white hover:bg-muted transition-colors"
                 aria-label="Go back"
               >
                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
@@ -170,7 +170,7 @@ export default function ChatPage(): JSX.Element {
             <button
               type="button"
               onClick={handleNewConversation}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-1.5 rounded-lg text-muted-foreground hover:text-white hover:bg-muted transition-colors"
               aria-label="New conversation"
             >
               <Plus className="w-4 h-4" aria-hidden="true" />
@@ -189,7 +189,7 @@ export default function ChatPage(): JSX.Element {
                   'transition-all duration-150',
                   activeConversationId === conv.id
                     ? 'bg-symtex-primary/20 text-white'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    : 'text-muted-foreground hover:bg-muted hover:text-white'
                 )}
                 onClick={() => setActiveConversation(conv.id)}
                 onKeyDown={(e) => {
@@ -211,7 +211,7 @@ export default function ChatPage(): JSX.Element {
                     e.stopPropagation();
                     handleDeleteConversation(conv.id);
                   }}
-                  className="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-red-500/20 text-slate-500 hover:text-red-400 transition-all"
+                  className="p-1 rounded opacity-0 group-hover:opacity-100 hover:bg-red-500/20 text-muted-foreground hover:text-red-400 transition-all"
                   aria-label={`Delete ${conv.title}`}
                 >
                   <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
@@ -219,7 +219,7 @@ export default function ChatPage(): JSX.Element {
               </div>
             ))
           ) : (
-            <div className="flex flex-col items-center justify-center py-8 text-slate-500 text-sm">
+            <div className="flex flex-col items-center justify-center py-8 text-muted-foreground text-sm">
               <MessageSquare className="w-8 h-8 mb-2 opacity-50" aria-hidden="true" />
               <p>No conversations yet</p>
               <button
@@ -237,7 +237,7 @@ export default function ChatPage(): JSX.Element {
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Chat Header */}
-        <div className="h-14 px-4 flex items-center justify-between border-b border-symtex-border bg-symtex-card/50">
+        <div className="h-14 px-4 flex items-center justify-between border-b border-border bg-card/50">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-symtex-primary/20 flex items-center justify-center">
               <MessageSquare className="w-4 h-4 text-symtex-primary" aria-hidden="true" />
@@ -247,7 +247,7 @@ export default function ChatPage(): JSX.Element {
                 {activeConversation?.title || 'AI Assistant'}
               </h1>
               {activeCognate && (
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-muted-foreground">
                   with {activeCognate.name}
                 </p>
               )}
@@ -255,7 +255,7 @@ export default function ChatPage(): JSX.Element {
           </div>
           <button
             type="button"
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-2 rounded-lg text-muted-foreground hover:text-white hover:bg-muted transition-colors"
             aria-label="More options"
           >
             <MoreHorizontal className="w-5 h-5" aria-hidden="true" />

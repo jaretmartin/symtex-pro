@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: ["class"],
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,6 +8,40 @@ export default {
   theme: {
     extend: {
       colors: {
+        // shadcn/ui semantic colors
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         symtex: {
           // Brand colors using CSS variables
           primary: 'var(--color-primary)',
@@ -50,6 +85,19 @@ export default {
           500: 'var(--color-info)',
           600: 'var(--color-info-600)',
         },
+        surface: {
+          base: 'var(--color-surface-base)',
+          dark: 'var(--color-surface-dark)',
+          card: 'var(--color-surface-card)',
+          elevated: 'var(--color-surface-elevated)',
+          hover: 'var(--color-surface-hover)',
+        },
+        'text-theme': {
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          tertiary: 'var(--color-text-tertiary)',
+          muted: 'var(--color-text-muted)',
+        },
       },
       boxShadow: {
         'primary': 'var(--shadow-primary)',
@@ -60,6 +108,9 @@ export default {
         'glow-accent': 'var(--glow-accent)',
       },
       borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
         'xl': 'var(--radius-xl)',
         '2xl': 'var(--radius-2xl)',
         '3xl': 'var(--radius-3xl)',
@@ -91,14 +142,26 @@ export default {
         'scale-in': 'scaleIn var(--duration-normal) var(--ease-out) forwards',
         'shimmer': 'shimmer 1.5s infinite',
         'pulse-subtle': 'pulseSubtle 2s var(--ease-in-out) infinite',
+        // shadcn/ui animations
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
         pulseSubtle: {
           '0%, 100%': { boxShadow: '0 0 0 0 rgba(99, 102, 241, 0.4)' },
           '50%': { boxShadow: '0 0 0 4px rgba(99, 102, 241, 0.1)' },
         },
+        // shadcn/ui keyframes
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 }

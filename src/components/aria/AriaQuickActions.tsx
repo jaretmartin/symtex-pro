@@ -141,8 +141,8 @@ export const DEFAULT_QUICK_ACTIONS: Record<string, QuickAction[]> = {
     },
     {
       id: 'mission-2',
-      label: 'Add a task',
-      message: 'Add a new task to this mission.',
+      label: 'Add an Action',
+      message: 'Add a new Action to this mission.',
       icon: 'plus',
       category: 'Create',
     },
